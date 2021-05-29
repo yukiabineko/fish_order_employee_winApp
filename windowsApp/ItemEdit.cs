@@ -8,21 +8,21 @@ using System.Windows.Forms;
 
 namespace windowsApp
 {
-    public partial class UserControl1 : UserControl
+    public partial class ItemEdit : Form
     {
-        public UserControl1()
+        public ItemEdit()
         {
             InitializeComponent();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

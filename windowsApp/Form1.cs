@@ -19,9 +19,10 @@ namespace windowsApp
         {
             InitializeComponent();
             login = new Login();
+            login.main = this;
             menu = new Menu();
-            login.Visible = false;
-            menu.Visible = true;
+            login.Visible = true;
+            menu.Visible = false;
             panel1.Controls.Add(login);
             panel1.Controls.Add(menu);
         }

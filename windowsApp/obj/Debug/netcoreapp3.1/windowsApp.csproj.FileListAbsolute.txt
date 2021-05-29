@@ -17,3 +17,7 @@ C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.genruntimeconfig.cache
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.ItemControl.resources
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.UserControl1.resources
+C:\Users\yukia\Desktop\windowsApp\windowsApp\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.csproj.CopyComplete
+C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.NewItem.resources
+C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.ItemEdit.resources
