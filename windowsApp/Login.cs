@@ -60,6 +60,11 @@ namespace windowsApp
                         main.label2.Text = (string)obj["email"];
                         main.menu.Visible = true;
                         this.Visible = false;
+                        main.setMail(textBox1.Text);
+                        main.setPass(textBox2.Text);
+                        main.menu.setMail(textBox1.Text);
+                        main.menu.setPass(textBox2.Text);
+
                         MessageBox.Show("ログインしました。");
                     }
                     else
