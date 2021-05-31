@@ -104,5 +104,12 @@ namespace windowsApp
         {
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            UserNew usernew = new UserNew();
+            usernew.ShowDialog(this);
+            usernew.Dispose();
+        }
     }
 }

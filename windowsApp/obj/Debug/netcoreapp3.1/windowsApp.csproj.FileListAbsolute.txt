@@ -21,3 +21,4 @@ C:\Users\yukia\Desktop\windowsApp\windowsApp\bin\Debug\netcoreapp3.1\Newtonsoft.
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.csproj.CopyComplete
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.NewItem.resources
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.ItemEdit.resources
+C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.UserNew.resources
