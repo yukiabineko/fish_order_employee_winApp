@@ -25,5 +25,8 @@
     <Compile Update="UserNew.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="UserOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

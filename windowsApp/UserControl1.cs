@@ -41,22 +41,18 @@ namespace windowsApp
             telColumn.HeaderText = "電話番号";
             telColumn.Width = 155;
 
-            DataGridViewButtonColumn editBtn = new DataGridViewButtonColumn();
-            editBtn.UseColumnTextForButtonValue = true;
-            editBtn.Text = "編集";
-            editBtn.Width = 80;
 
             DataGridViewButtonColumn deleteBtn = new DataGridViewButtonColumn();
             deleteBtn.UseColumnTextForButtonValue = true;
+            deleteBtn.Name = "delete";
             deleteBtn.Text = "削除";
-            deleteBtn.Width = 80;
+            deleteBtn.Width = 160;
 
 
 
             dataGridView1.Columns.Add(nameColumn);
             dataGridView1.Columns.Add(mailColumn);
             dataGridView1.Columns.Add(telColumn);
-            dataGridView1.Columns.Add(editBtn);
             dataGridView1.Columns.Add(deleteBtn);
 
         }
@@ -68,6 +64,7 @@ namespace windowsApp
 
         private void button1_Click(object sender, EventArgs e)
         {
+            dataGridView1.Rows.Clear();
             string usersUrl = "https://uematsu-backend.herokuapp.com/users/index";
             groupBox1.Visible = true;
             for(var i = progressBar1.Minimum; i<progressBar1.Maximum; i += 10)
@@ -107,9 +104,51 @@ namespace windowsApp
 
         private void button2_Click(object sender, EventArgs e)
         {
+            MessageBox.Show(menu.getMail());
             UserNew usernew = new UserNew();
             usernew.ShowDialog(this);
             usernew.Dispose();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView dgv = (DataGridView)sender;
+            if(dgv.Columns[e.ColumnIndex].Name == "delete")
+            {
+
+                DialogResult result = MessageBox.Show("削除しますか？","",MessageBoxButtons.YesNo);
+                if(result == DialogResult.Yes)
+                {
+                    JToken obj = array[e.RowIndex];
+                    MessageBox.Show((string)obj["id"]);
+                    string deleteUrl = "https://uematsu-backend.herokuapp.com/users/" + (string)obj["id"];
+                    using (WebClient webClient = new WebClient())
+                    {
+                        NameValueCollection collection = new NameValueCollection();
+                        collection.Add("id", (string)obj["id"]);
+                        collection.Add("email", menu.getMail());
+                        collection.Add("password", menu.getPass());
+                        webClient.UploadValuesAsync(new Uri(deleteUrl), "delete", collection);
+                        webClient.UploadValuesCompleted += (s, o) =>
+                        {
+                            dgv.Rows[e.RowIndex].Visible = false;
+                            foreach(DataGridViewRow r in dgv.SelectedRows)
+                            {
+                                dgv.Rows.Remove(r);
+                            }
+                            MessageBox.Show("削除しました。");
+
+                        };
+                    };
+
+                }
+            }
+            else
+            {
+                UserOrder orderWin = new UserOrder();
+                orderWin.ShowDialog(this);
+                orderWin.Dispose();
+            }
         }
     }
 }

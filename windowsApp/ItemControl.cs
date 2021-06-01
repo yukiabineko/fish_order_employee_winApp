@@ -83,7 +83,7 @@ namespace windowsApp
             {
                 progressBar1.Value = i;
             }
-            WebRequest request = WebRequest.Create("http://192.168.1.7:3000/items");
+            WebRequest request = WebRequest.Create("https://uematsu-backend.herokuapp.com/items");
             var stream = await request.GetResponseAsync();
             var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
             array = JArray.Parse(reader);
@@ -93,7 +93,7 @@ namespace windowsApp
                 {
                     try
                     {
-                        string imgUrl = "http://192.168.1.7:8888/upload/" + (string)data["name"] + ".jpg";
+                        string imgUrl = "http://yukiabineko.sakura.ne.jp/react/" + (string)data["name"] + ".jpg";
                         
 
                         var st = wc.OpenRead(imgUrl);
@@ -135,7 +135,7 @@ namespace windowsApp
             if(dgv.Columns[e.ColumnIndex].Name == "edit")
             {
                 ItemEdit itemEdit = new ItemEdit();
-                itemEdit.pictureBox1.ImageLocation = "http://192.168.1.7:8888/upload/" + (string)obj["name"] + ".jpg";
+                itemEdit.pictureBox1.ImageLocation = "http://yukiabineko.sakura.ne.jp/react/" + (string)obj["name"] + ".jpg";
                 itemEdit.label1.Text = (string)obj["name"] + "編集";
                 itemEdit.textBox2.Text = (string)obj["name"];
                 itemEdit.textBox3.Text = (string)obj["price"];

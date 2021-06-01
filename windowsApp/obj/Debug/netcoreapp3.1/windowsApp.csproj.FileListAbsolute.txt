@@ -22,3 +22,4 @@ C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.NewItem.resources
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.ItemEdit.resources
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.UserNew.resources
+C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.UserOrder.resources
