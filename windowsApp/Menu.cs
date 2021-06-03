@@ -14,6 +14,7 @@ namespace windowsApp
         private string pass = "";
         public UserControl1 users;
         public ItemControl items;
+        public UserOrder userOrder;
 
         public Menu()
         {
@@ -21,9 +22,11 @@ namespace windowsApp
             items = new ItemControl();
             users = new UserControl1();
 
+
             tabPage1.Text = "商品管理";
             tabPage2.Text = "会員管理";
             users.menu = this;
+            
             tabPage1.Controls.Add(items);
             tabPage2.Controls.Add(users);
             
@@ -53,6 +56,11 @@ namespace windowsApp
         public string getPass()
         {
             return pass;
+        }
+
+        private void Menu_Load(object sender, EventArgs e)
+        {
+
         }
     }
 

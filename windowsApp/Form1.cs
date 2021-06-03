@@ -16,10 +16,13 @@ namespace windowsApp
         public Menu menu;
         private string mail ="";
         private string pass ="";
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")] // この行を追加
+        private static extern bool AllocConsole();
 
         public Form1()
         {
             InitializeComponent();
+            AllocConsole();
             login = new Login();
             login.main = this;
 

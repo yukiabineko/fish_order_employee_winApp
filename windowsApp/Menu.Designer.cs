@@ -74,6 +74,7 @@ namespace windowsApp
             this.Controls.Add(this.tabControl1);
             this.Name = "Menu";
             this.Size = new System.Drawing.Size(900, 800);
+            this.Load += new System.EventHandler(this.Menu_Load);
             this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
 

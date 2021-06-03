@@ -104,7 +104,6 @@ namespace windowsApp
 
         private void button2_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(menu.getMail());
             UserNew usernew = new UserNew();
             usernew.ShowDialog(this);
             usernew.Dispose();
@@ -113,13 +112,15 @@ namespace windowsApp
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridView dgv = (DataGridView)sender;
-            if(dgv.Columns[e.ColumnIndex].Name == "delete")
+            JToken obj = array[e.RowIndex];
+
+            if (dgv.Columns[e.ColumnIndex].Name == "delete")
             {
 
                 DialogResult result = MessageBox.Show("削除しますか？","",MessageBoxButtons.YesNo);
                 if(result == DialogResult.Yes)
                 {
-                    JToken obj = array[e.RowIndex];
+                  
                     MessageBox.Show((string)obj["id"]);
                     string deleteUrl = "https://uematsu-backend.herokuapp.com/users/" + (string)obj["id"];
                     using (WebClient webClient = new WebClient())
@@ -146,6 +147,9 @@ namespace windowsApp
             else
             {
                 UserOrder orderWin = new UserOrder();
+                orderWin.setMail(menu.getMail());
+                orderWin.setPass(menu.getPass());
+                orderWin.setId((string)obj["id"]);
                 orderWin.ShowDialog(this);
                 orderWin.Dispose();
             }
