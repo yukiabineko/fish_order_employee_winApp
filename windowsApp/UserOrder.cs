@@ -19,6 +19,9 @@ namespace windowsApp
         private string id = "";
         private string mail = "";
         private string pass = "";
+        private JArray array;
+        private JArray todayArr;
+        private JArray historyArray;
        
 
         public UserOrder()
@@ -27,21 +30,21 @@ namespace windowsApp
             dataGridView1.AllowUserToAddRows = false;
             DataGridViewTextBoxColumn dayColumn = new DataGridViewTextBoxColumn();
             dayColumn.HeaderText = "日付け";
-            dayColumn.Width = 160;
+            dayColumn.Width = dataGridView1.Width/4;
 
 
             DataGridViewTextBoxColumn nameColumn = new DataGridViewTextBoxColumn();
             nameColumn.HeaderText = "商品名";
-            nameColumn.Width = 160;
+            nameColumn.Width = dataGridView1.Width/5;
 
 
             DataGridViewTextBoxColumn priceColumn = new DataGridViewTextBoxColumn();
             priceColumn.HeaderText = "価格";
-            priceColumn.Width = 160;
+            priceColumn.Width = dataGridView1.Width / 5;
 
             DataGridViewTextBoxColumn numColumn = new DataGridViewTextBoxColumn();
             numColumn.HeaderText = "数量";
-            numColumn.Width = 160;
+            numColumn.Width = dataGridView1.Width/5;
 
             DataGridViewTextBoxColumn processColumn = new DataGridViewTextBoxColumn();
             processColumn.HeaderText = "依頼加工";
@@ -53,11 +56,25 @@ namespace windowsApp
             dataGridView1.Columns.Add(numColumn);
             dataGridView1.Columns.Add(processColumn);
 
+            
+
         }
 
         private void UserOrder_Load(object sender, EventArgs e)
         {
-
+            if (array != null)
+            {
+                foreach (var arr in array[0])
+                {
+                    dataGridView1.Rows.Add(
+                       arr["shopping_date"],
+                       arr["name"],
+                       arr["price"],
+                       arr["num"],
+                       arr["process"]
+                    );
+                }
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -76,7 +93,7 @@ namespace windowsApp
                     string data = System.Text.Encoding.UTF8.GetString(o.Result);
                     JObject obj = JObject.Parse(data);
                     
-                    JArray array = (JArray)obj["orders"];
+                    array = (JArray)obj["orders"];
                     Console.WriteLine(array[0]);
                     foreach(var arr in array[0])
                     {
@@ -115,6 +132,30 @@ namespace windowsApp
         public string getPass()
         {
             return this.pass;
+        }
+        public void setJArray(JArray arr)
+        {
+            this.array = arr;
+        }
+        public JArray GetArray()
+        {
+            return this.array;
+        }
+        public void setTodayArray(JArray arr)
+        {
+            this.todayArr = arr;
+        }
+        public JArray GetTodayArray()
+        {
+            return this.todayArr;
+        }
+        public void setHistoryArray(JArray arr)
+        {
+            this.historyArray = arr;
+        }
+        public JArray GetHistoryArray()
+        {
+            return this.historyArray;
         }
     }
 }

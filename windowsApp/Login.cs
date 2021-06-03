@@ -28,6 +28,7 @@ namespace windowsApp
             progressBar1.Minimum = 10;
             progressBar1.Maximum = 100;
             progressBar1.Value = progressBar1.Minimum;
+           
 
         }
 

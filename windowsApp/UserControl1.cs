@@ -114,6 +114,11 @@ namespace windowsApp
             DataGridView dgv = (DataGridView)sender;
             JToken obj = array[e.RowIndex];
 
+            DateTime dateTime = DateTime.Now;
+            string dt = dateTime.ToString("yyyy/MM/dd");
+
+
+
             if (dgv.Columns[e.ColumnIndex].Name == "delete")
             {
 
@@ -146,12 +151,70 @@ namespace windowsApp
             }
             else
             {
-                UserOrder orderWin = new UserOrder();
-                orderWin.setMail(menu.getMail());
-                orderWin.setPass(menu.getPass());
-                orderWin.setId((string)obj["id"]);
-                orderWin.ShowDialog(this);
-                orderWin.Dispose();
+
+                groupBox1.Visible = true;
+                for (var i = progressBar1.Minimum; i < progressBar1.Maximum; i += 10)
+                {
+                    progressBar1.Value = i;
+                }
+
+                string orderUrl = "https://uematsu-backend.herokuapp.com/users/show";
+                using (WebClient webClient = new WebClient())
+                {
+                    NameValueCollection collection = new NameValueCollection();
+                    collection.Add("id", (string)obj["id"]);
+                    collection.Add("email", menu.getMail());
+                    collection.Add("password", menu.getPass());
+                    webClient.UploadValuesAsync(new Uri(orderUrl), collection);
+                    webClient.UploadValuesCompleted += (s, o) =>
+                    {
+                        string data = System.Text.Encoding.UTF8.GetString(o.Result);
+                        JObject obj = JObject.Parse(data);
+
+                       JArray arrs = (JArray)obj["orders"];
+                       JArray todayArray = new JArray();
+                       JArray historyArray = new JArray();
+
+   
+                        foreach(var ar in arrs[0])
+                        {
+                            if((string)ar["shopping_date"] == dt)
+                            {
+                                todayArray.Add(ar);
+                            }
+                            else
+                            {
+                                historyArray.Add(ar);
+                            }
+                        }
+                        Console.WriteLine("本日");
+                        Console.WriteLine(todayArray);
+                        Console.WriteLine("履歴");
+                        Console.WriteLine(historyArray);
+
+                        UserOrder orderWin = new UserOrder();
+                        orderWin.setJArray(arrs);
+                        orderWin.setMail(menu.getMail());
+                        orderWin.setPass(menu.getPass());
+                        orderWin.setId((string)obj["id"]);
+                        orderWin.ShowDialog(this);
+                        orderWin.Dispose();
+                        progressBar1.Visible = false;
+                        foreach (var arr in historyArray)
+                        {
+                            dataGridView1.Rows.Add(
+                               arr["shopping_date"],
+                               arr["name"],
+                               arr["price"],
+                               arr["num"],
+                               arr["process"]
+                            );
+                        }
+                        groupBox1.Visible = false;
+
+                    };
+                };
+              
             }
         }
     }
