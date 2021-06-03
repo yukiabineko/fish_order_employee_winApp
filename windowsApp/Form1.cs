@@ -38,7 +38,10 @@ namespace windowsApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            // 最大化・最小化の無効
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
         }
        public void setMail(string s)
         {

@@ -38,6 +38,7 @@ namespace windowsApp
 
         private void button1_Click(object sender, EventArgs e)
         {
+            button1.Enabled = false;
             groupBox1.Visible = true;
             for(var i = progressBar1.Minimum; i<progressBar1.Maximum; i += 10)
             {
@@ -70,6 +71,7 @@ namespace windowsApp
                     else
                     {
                         MessageBox.Show("認証失敗しました。");
+                        button1.Enabled = true;
                     }
                     groupBox1.Visible = false;
                 };
@@ -84,7 +86,7 @@ namespace windowsApp
 
         private void Login_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

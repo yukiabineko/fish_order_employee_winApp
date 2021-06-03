@@ -44,10 +44,12 @@ namespace windowsApp
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label1.Font = new System.Drawing.Font("Yu Gothic UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(343, 37);
+            this.label1.Location = new System.Drawing.Point(334, 54);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(175, 65);
             this.label1.TabIndex = 0;
@@ -76,6 +78,8 @@ namespace windowsApp
             // 
             // textBox1
             // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Font = new System.Drawing.Font("Yu Gothic UI", 20F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
             this.textBox1.Location = new System.Drawing.Point(97, 304);
             this.textBox1.Name = "textBox1";
@@ -92,10 +96,12 @@ namespace windowsApp
             // 
             // button1
             // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.BackColor = System.Drawing.SystemColors.Highlight;
             this.button1.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.button1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button1.Location = new System.Drawing.Point(244, 606);
+            this.button1.Location = new System.Drawing.Point(242, 577);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(351, 87);
             this.button1.TabIndex = 5;
@@ -138,7 +144,7 @@ namespace windowsApp
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Font = new System.Drawing.Font("Yu Gothic UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.linkLabel1.Location = new System.Drawing.Point(306, 543);
+            this.linkLabel1.Location = new System.Drawing.Point(313, 696);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(212, 45);
             this.linkLabel1.TabIndex = 7;
