@@ -117,6 +117,9 @@ namespace windowsApp
             DateTime dateTime = DateTime.Now;
             string dt = dateTime.ToString("yyyy/MM/dd");
 
+            DateTime tomorrow = DateTime.Now;
+            tomorrow = tomorrow.AddDays(1);
+            string tw = tomorrow.ToString("yyyy/MM/dd");
 
 
             if (dgv.Columns[e.ColumnIndex].Name == "delete")
@@ -178,7 +181,7 @@ namespace windowsApp
    
                         foreach(var ar in arrs[0])
                         {
-                            if((string)ar["shopping_date"] == dt)
+                            if((string)ar["shopping_date"] == dt || (string)ar["shopping_date"] == tw)
                             {
                                 todayArray.Add(ar);
                             }
@@ -188,28 +191,24 @@ namespace windowsApp
                             }
                         }
                         Console.WriteLine("本日");
+                        Console.WriteLine(dt);
+                        Console.WriteLine("明日");
+                        Console.WriteLine(tw);
                         Console.WriteLine(todayArray);
                         Console.WriteLine("履歴");
                         Console.WriteLine(historyArray);
 
                         UserOrder orderWin = new UserOrder();
                         orderWin.setJArray(arrs);
+                        orderWin.setTodayArray(todayArray);
+                        orderWin.setHistoryArray(historyArray);
                         orderWin.setMail(menu.getMail());
                         orderWin.setPass(menu.getPass());
                         orderWin.setId((string)obj["id"]);
                         orderWin.ShowDialog(this);
                         orderWin.Dispose();
                         progressBar1.Visible = false;
-                        foreach (var arr in historyArray)
-                        {
-                            dataGridView1.Rows.Add(
-                               arr["shopping_date"],
-                               arr["name"],
-                               arr["price"],
-                               arr["num"],
-                               arr["process"]
-                            );
-                        }
+                       
                         groupBox1.Visible = false;
 
                     };

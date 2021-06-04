@@ -56,15 +56,58 @@ namespace windowsApp
             dataGridView1.Columns.Add(numColumn);
             dataGridView1.Columns.Add(processColumn);
 
+            //当日、翌日用
+            dataGridView2.AllowUserToAddRows = false;
+            DataGridViewTextBoxColumn dayColumn2 = new DataGridViewTextBoxColumn();
+            dayColumn2.HeaderText = "日付け";
+            dayColumn2.Width = dataGridView1.Width / 4;
+
+
+            DataGridViewTextBoxColumn nameColumn2 = new DataGridViewTextBoxColumn();
+            nameColumn2.HeaderText = "商品名";
+            nameColumn2.Width = dataGridView1.Width / 5;
+
+
+            DataGridViewTextBoxColumn priceColumn2 = new DataGridViewTextBoxColumn();
+            priceColumn2.HeaderText = "価格";
+            priceColumn2.Width = dataGridView1.Width / 5;
+
+            DataGridViewTextBoxColumn numColumn2 = new DataGridViewTextBoxColumn();
+            numColumn2.HeaderText = "数量";
+            numColumn2.Width = dataGridView1.Width / 5;
+
+            DataGridViewTextBoxColumn processColumn2 = new DataGridViewTextBoxColumn();
+            processColumn2.HeaderText = "依頼加工";
+            processColumn2.Width = 160;
+
+            dataGridView2.Columns.Add(dayColumn2);
+            dataGridView2.Columns.Add(nameColumn2);
+            dataGridView2.Columns.Add(priceColumn2);
+            dataGridView2.Columns.Add(numColumn2);
+            dataGridView2.Columns.Add(processColumn2);
+
             
 
         }
 
         private void UserOrder_Load(object sender, EventArgs e)
         {
-            if (array != null)
+            if (todayArr != null)
             {
-                foreach (var arr in array[0])
+                foreach (var arr in todayArr)
+                {
+                    dataGridView2.Rows.Add(
+                       arr["shopping_date"],
+                       arr["name"],
+                       arr["price"],
+                       arr["num"],
+                       arr["process"]
+                    );
+                }
+            }
+            if (historyArray != null)
+            {
+                foreach (var arr in historyArray)
                 {
                     dataGridView1.Rows.Add(
                        arr["shopping_date"],
