@@ -60,50 +60,77 @@ namespace windowsApp
             dataGridView2.AllowUserToAddRows = false;
             DataGridViewTextBoxColumn dayColumn2 = new DataGridViewTextBoxColumn();
             dayColumn2.HeaderText = "日付け";
-            dayColumn2.Width = dataGridView1.Width / 4;
+            dayColumn2.Width = dataGridView2.Width / 6;
 
 
             DataGridViewTextBoxColumn nameColumn2 = new DataGridViewTextBoxColumn();
             nameColumn2.HeaderText = "商品名";
-            nameColumn2.Width = dataGridView1.Width / 5;
+            nameColumn2.Width = dataGridView2.Width / 6;
 
 
             DataGridViewTextBoxColumn priceColumn2 = new DataGridViewTextBoxColumn();
             priceColumn2.HeaderText = "価格";
-            priceColumn2.Width = dataGridView1.Width / 5;
+            priceColumn2.Width = dataGridView2.Width / 6;
 
             DataGridViewTextBoxColumn numColumn2 = new DataGridViewTextBoxColumn();
             numColumn2.HeaderText = "数量";
-            numColumn2.Width = dataGridView1.Width / 5;
+            numColumn2.Width = dataGridView2.Width / 6;
 
             DataGridViewTextBoxColumn processColumn2 = new DataGridViewTextBoxColumn();
             processColumn2.HeaderText = "依頼加工";
-            processColumn2.Width = 160;
+            processColumn2.Width = dataGridView2.Width / 6;
+
+            DataGridViewTextBoxColumn confirm = new DataGridViewTextBoxColumn();
+            confirm.HeaderText = "依頼状況";
+            confirm.Width = dataGridView2.Width / 6;
 
             dataGridView2.Columns.Add(dayColumn2);
             dataGridView2.Columns.Add(nameColumn2);
             dataGridView2.Columns.Add(priceColumn2);
             dataGridView2.Columns.Add(numColumn2);
             dataGridView2.Columns.Add(processColumn2);
+            dataGridView2.Columns.Add(confirm);
 
-            
-
+           
         }
 
         private void UserOrder_Load(object sender, EventArgs e)
         {
+            DateTime today = DateTime.Now;
+            string td = today.ToString("yyyy/MM/dd");
+
+            DateTime tomorrow = DateTime.Now;
+            tomorrow = tomorrow.AddDays(1);
+            string tw = tomorrow.ToString("yyyy/MM/dd");
+
             if (todayArr != null)
             {
                 foreach (var arr in todayArr)
                 {
-                    dataGridView2.Rows.Add(
-                       arr["shopping_date"],
-                       arr["name"],
-                       arr["price"],
-                       arr["num"],
-                       arr["process"]
-                    );
+                    if((string)arr["shopping_date"] == td)
+                    {
+                        dataGridView2.Rows.Add(
+                          arr["shopping_date"],
+                          arr["name"],
+                          arr["price"],
+                          arr["num"],
+                          arr["process"],
+                          (string)arr["status"] == "0" ? "申請中" : (string)arr["status"] == "1" ? "加工済み" : "受け渡し済み"
+                       );
+                    }
+                    else
+                    {
+                        dataGridView2.Rows.Add(
+                          arr["shopping_date"],
+                          arr["name"],
+                          arr["price"],
+                          arr["num"],
+                          arr["process"],
+                          ""
+                       );
+                    }
                 }
+               
             }
             if (historyArray != null)
             {
@@ -118,6 +145,28 @@ namespace windowsApp
                     );
                 }
             }
+            //分岐で変更
+          for(var i = 0; i<todayArr.Count; i++)
+            {
+                if(dataGridView2.Rows[i].Cells[0].Value.ToString() == tw)
+                {
+                    dataGridView2.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
+                }
+                else if(dataGridView2.Rows[i].Cells[5].Value.ToString() == "申請中")
+                {
+                    dataGridView2.Rows[i].Cells[5].Style.ForeColor = Color.White;
+                    dataGridView2.Rows[i].Cells[5].Style.BackColor = Color.Blue;
+                    dataGridView2.Rows[i].Cells[5].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
+                else
+                {
+                    dataGridView2.Rows[i].Cells[5].Style.ForeColor = Color.White;
+                    dataGridView2.Rows[i].Cells[5].Style.BackColor = Color.Red;
+                    dataGridView2.Rows[i].Cells[5].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
+            }
+            
+
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -22,6 +22,7 @@ namespace windowsApp
         {
             InitializeComponent();
             groupBox1.Visible = false;
+            progressBar1.Visible = false;
             progressBar1.Minimum = 10;
             progressBar1.Maximum = 100;
             progressBar1.Value = progressBar1.Minimum;
@@ -59,7 +60,10 @@ namespace windowsApp
 
         private void label1_Click(object sender, EventArgs e)
         {
-
+            groupBox1.Visible = false;
+            progressBar1.Minimum = 10;
+            progressBar1.Maximum = 100;
+            progressBar1.Value = progressBar1.Minimum;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -67,7 +71,10 @@ namespace windowsApp
             dataGridView1.Rows.Clear();
             string usersUrl = "https://uematsu-backend.herokuapp.com/users/index";
             groupBox1.Visible = true;
-            for(var i = progressBar1.Minimum; i<progressBar1.Maximum; i += 10)
+            progressBar1.Visible = true;
+            
+           
+            for (var i = progressBar1.Minimum; i<progressBar1.Maximum; i += 10)
             {
                 progressBar1.Value = i;
             }
@@ -154,8 +161,12 @@ namespace windowsApp
             }
             else
             {
-
+                label2.Text = "集計しています。しばらくおまちください。";
                 groupBox1.Visible = true;
+                progressBar1.Visible = true;
+                progressBar1.Minimum = 10;
+                progressBar1.Maximum = 100;
+                progressBar1.Value = progressBar1.Minimum;
                 for (var i = progressBar1.Minimum; i < progressBar1.Maximum; i += 10)
                 {
                     progressBar1.Value = i;
@@ -190,13 +201,6 @@ namespace windowsApp
                                 historyArray.Add(ar);
                             }
                         }
-                        Console.WriteLine("本日");
-                        Console.WriteLine(dt);
-                        Console.WriteLine("明日");
-                        Console.WriteLine(tw);
-                        Console.WriteLine(todayArray);
-                        Console.WriteLine("履歴");
-                        Console.WriteLine(historyArray);
 
                         UserOrder orderWin = new UserOrder();
                         orderWin.setJArray(arrs);
