@@ -23,29 +23,29 @@ namespace windowsApp
             progressBar1.Value = progressBar1.Minimum;
 
 
-            DataGridViewButtonColumn name = new DataGridViewButtonColumn();
+            DataGridViewTextBoxColumn name = new DataGridViewTextBoxColumn();
             name.HeaderText = "商品名";
+            name.Name = "show";
             name.Width = 140;
 
 
-            DataGridViewButtonColumn price = new DataGridViewButtonColumn();
+            DataGridViewTextBoxColumn price = new DataGridViewTextBoxColumn();
             price.HeaderText = "価格";
             price.Width = 140;
 
 
-            DataGridViewButtonColumn stock = new DataGridViewButtonColumn();
+            DataGridViewTextBoxColumn stock = new DataGridViewTextBoxColumn();
             stock.HeaderText = "在庫";
             stock.Width = 120;
 
-            DataGridViewButtonColumn total = new DataGridViewButtonColumn();
-            total.HeaderText = "加工法";
+            DataGridViewTextBoxColumn total = new DataGridViewTextBoxColumn();
+            total.HeaderText = "合計";
             total.Width = 140;
 
             DataGridViewButtonColumn edit = new DataGridViewButtonColumn();
             edit.Name = "edit";
             edit.Text = "編集";
-            edit.DefaultCellStyle.BackColor = Color.Blue;
-            edit.DefaultCellStyle.ForeColor = Color.White;
+            edit.Name = "edit";
             edit.UseColumnTextForButtonValue = true;
             edit.Width = 140;
 
@@ -53,18 +53,23 @@ namespace windowsApp
             DataGridViewButtonColumn delete = new DataGridViewButtonColumn();
             delete.Name = "delete";
             delete.Text = "削除";
-            delete.DefaultCellStyle.BackColor = Color.Red;
-            delete.DefaultCellStyle.ForeColor = Color.White;
+            delete.Name = "delete";
             delete.UseColumnTextForButtonValue = true;
             delete.Width = 140;
 
 
+            
             dataGridView1.Columns.Add(name);
             dataGridView1.Columns.Add(price);
             dataGridView1.Columns.Add(stock);
             dataGridView1.Columns.Add(total);
             dataGridView1.Columns.Add(edit);
             dataGridView1.Columns.Add(delete);
+
+            dataGridView1.Columns[4].DefaultCellStyle.BackColor = Color.Blue;
+            dataGridView1.Columns[4].DefaultCellStyle.ForeColor = Color.White;
+            dataGridView1.Columns[5].DefaultCellStyle.BackColor = Color.Red;
+            dataGridView1.Columns[5].DefaultCellStyle.ForeColor = Color.White;
 
         }
 
@@ -103,6 +108,18 @@ namespace windowsApp
                
            
             };
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView dgv = (DataGridView)sender;
+            if(dgv.Columns[e.ColumnIndex].Name == "edit")
+            {
+                MessageBox.Show("edit");
+            }
+            else {
+                MessageBox.Show("delete");
+            }
         }
     }
 }
