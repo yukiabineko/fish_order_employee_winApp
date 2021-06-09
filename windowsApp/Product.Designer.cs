@@ -78,6 +78,7 @@ namespace windowsApp
             this.button1.TabIndex = 2;
             this.button1.Text = "陳列商品登録";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -143,6 +144,7 @@ namespace windowsApp
             this.Controls.Add(this.dataGridView1);
             this.Name = "Product";
             this.Size = new System.Drawing.Size(863, 726);
+            this.Load += new System.EventHandler(this.Product_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);

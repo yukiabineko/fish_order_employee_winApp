@@ -13,6 +13,8 @@ namespace windowsApp
 {
     public partial class Product : UserControl
     {
+        private JArray items;
+
         public Product()
         {
             InitializeComponent();
@@ -21,6 +23,8 @@ namespace windowsApp
             progressBar1.Minimum = 10;
             progressBar1.Maximum = 100;
             progressBar1.Value = progressBar1.Minimum;
+
+            button1.Visible = false;
 
 
             DataGridViewTextBoxColumn name = new DataGridViewTextBoxColumn();
@@ -121,5 +125,33 @@ namespace windowsApp
                 MessageBox.Show("delete");
             }
         }
+
+        private void Product_Load(object sender, EventArgs e)
+        {
+            using(WebClient webClient = new WebClient())
+            {
+                string itemUrl = "https://uematsu-backend.herokuapp.com/items";
+                webClient.DownloadDataAsync(new Uri(itemUrl));
+                webClient.DownloadDataCompleted += (s, o) =>
+                {
+                    string data = System.Text.Encoding.UTF8.GetString(o.Result);
+                    items = JArray.Parse(data);
+                    button1.Visible = true;
+                };
+
+
+            };
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ProductNew productNew = new ProductNew();
+            productNew.main = this;
+            productNew.setArray(items);
+            productNew.ShowDialog(this);
+            productNew.Dispose();
+        }
+        
+
     }
 }
