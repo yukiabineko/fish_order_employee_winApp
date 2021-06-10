@@ -37,6 +37,7 @@ namespace windowsApp
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,8 +57,6 @@ namespace windowsApp
             // 
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.comboBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(12, 120);
             this.comboBox1.Name = "comboBox1";
@@ -69,9 +68,12 @@ namespace windowsApp
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(12, 240);
+            this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(765, 31);
+            this.textBox1.Size = new System.Drawing.Size(765, 42);
             this.textBox1.TabIndex = 2;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // label2
             // 
@@ -82,7 +84,7 @@ namespace windowsApp
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(812, 38);
             this.label2.TabIndex = 3;
-            this.label2.Text = "商品名";
+            this.label2.Text = "価格";
             // 
             // label3
             // 
@@ -115,6 +117,7 @@ namespace windowsApp
             this.button1.TabIndex = 6;
             this.button1.Text = "登録";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label4
             // 
@@ -128,11 +131,28 @@ namespace windowsApp
             this.label4.Text = "店頭陳列商品登録";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.White;
+            this.button2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button2.Location = new System.Drawing.Point(723, 240);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(54, 42);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "✖";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Visible = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            // 
             // ProductNew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 564);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.numericUpDown1);
@@ -160,5 +180,6 @@ namespace windowsApp
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button2;
     }
 }

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+using System.Linq;
 using System.Windows.Forms;
-using System.Net;
-using System.IO;
 using Newtonsoft.Json.Linq;
 
 namespace windowsApp
@@ -15,6 +9,7 @@ namespace windowsApp
     {
         private JArray items;
         public Product main;
+        private string[] str;
 
         public ProductNew()
         {
@@ -38,7 +33,7 @@ namespace windowsApp
         private void ProductNew_Load(object sender, EventArgs e)
         {
            
-            string[] str = new string[items.Count];
+            str = new string[items.Count];
             for(var i = 0; i<items.Count; i++)
             {
                 str[i] = (string)items[i]["name"];
@@ -48,6 +43,57 @@ namespace windowsApp
             comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             //コンボボックスのアイテムをオートコンプリートの選択候補とする
             comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
+            numericUpDown1.Minimum = 0;
+            numericUpDown1.Value = 1;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!str.Contains(comboBox1.SelectedItem))
+            {
+                MessageBox.Show("リストにない商品です。");
+            }
+            else if(textBox1.Text == "")
+            {
+                MessageBox.Show("金額が入力されてません。");
+            }
+            else if(numericUpDown1.Value == 0)
+            {
+                MessageBox.Show("在庫の設定が不正です。");
+            }
+            else
+            {
+                MessageBox.Show("ok。");
+                string url = "https://uematsu-backend.herokuapp.com/orders";
+            }
+        }
+
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar < '0' || '9' < e.KeyChar)
+            {
+                //押されたキーが 0～9でない場合は、イベントをキャンセルする
+                button2.Visible = true;
+                e.Handled = true;
+            }
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            if(textBox1.Text == "")
+            {
+                button2.Visible = false;
+            }
+            else
+            {
+                button2.Visible = true;
+            }
         }
     }
 }
