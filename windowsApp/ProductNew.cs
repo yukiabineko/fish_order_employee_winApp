@@ -2,19 +2,23 @@
 using System.Linq;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
+using System.Net;
+using System.Collections.Specialized;
 
 namespace windowsApp
 {
     public partial class ProductNew : Form
     {
         private JArray items;
-        public Product main;
         private string[] str;
+        private string email = "";
+        private string pass = "";
 
         public ProductNew()
         {
             InitializeComponent();
-           
+            
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -32,6 +36,8 @@ namespace windowsApp
 
         private void ProductNew_Load(object sender, EventArgs e)
         {
+            Console.WriteLine(email);
+            Console.WriteLine(pass);
            
             str = new string[items.Count];
             for(var i = 0; i<items.Count; i++)
@@ -65,6 +71,19 @@ namespace windowsApp
             {
                 MessageBox.Show("ok。");
                 string url = "https://uematsu-backend.herokuapp.com/orders";
+                using(WebClient webClient = new WebClient())
+                {
+                    NameValueCollection collection = new NameValueCollection();
+                    collection.Add("name", comboBox1.SelectedItem.ToString());
+                    collection.Add("price", textBox1.Text);
+                    collection.Add("stock", numericUpDown1.Value.ToString());
+                    Console.WriteLine(numericUpDown1.Value.ToString());
+                    webClient.UploadValuesAsync(new Uri(url), collection);
+                    webClient.UploadValuesCompleted += (o, s) =>
+                    {
+                        MessageBox.Show("登録しました。");
+                    };
+                };
             }
         }
 
@@ -94,6 +113,14 @@ namespace windowsApp
             {
                 button2.Visible = true;
             }
+        }
+        public void setEmail(string email)
+        {
+            this.email = email;
+        }
+        public void setPass(string pass)
+        {
+            this.pass = pass;
         }
     }
 }

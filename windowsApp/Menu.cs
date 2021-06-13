@@ -23,6 +23,8 @@ namespace windowsApp
             items = new ItemControl();
             users = new UserControl1();
             product = new Product();
+            product.main = this;
+            
 
 
             tabPage1.Text = "商品管理";
@@ -38,7 +40,7 @@ namespace windowsApp
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            product.setEmail(mail);
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
@@ -65,6 +67,11 @@ namespace windowsApp
         private void Menu_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void tabPage3_Click(object sender, EventArgs e)
+        {
+           
         }
     }
 

@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Net;
-using System.IO;
 using Newtonsoft.Json.Linq;
 
 namespace windowsApp
@@ -14,6 +9,9 @@ namespace windowsApp
     public partial class Product : UserControl
     {
         private JArray items;
+        public Menu main;
+        private string email = "";
+        private string pass = "";
 
         public Product()
         {
@@ -128,6 +126,10 @@ namespace windowsApp
 
         private void Product_Load(object sender, EventArgs e)
         {
+            this.setEmail(main.getMail());
+            this.setPass(main.getPass());
+
+
             using(WebClient webClient = new WebClient())
             {
                 string itemUrl = "https://uematsu-backend.herokuapp.com/items";
@@ -141,17 +143,37 @@ namespace windowsApp
 
 
             };
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             ProductNew productNew = new ProductNew();
-            productNew.main = this;
             productNew.setArray(items);
+            productNew.setEmail(email);
+            productNew.setPass(pass);
             productNew.ShowDialog(this);
             productNew.Dispose();
         }
-        
+        public void setEmail(string email)
+        {
+            this.email = email;
+
+        }
+        public void setPass(string pass)
+        {
+            this.pass = pass;
+
+        }
+        public string getEmail()
+        {
+            return this.email;
+        }
+        public string getPass()
+        {
+            return this.pass;
+        }
+
 
     }
 }
