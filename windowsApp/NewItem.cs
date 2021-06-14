@@ -14,7 +14,7 @@ namespace windowsApp
 {
     public partial class NewItem : Form
     {
-        string phpUrl = "http://yukiabineko.sakura.ne.jp/send-react.php";
+        string phpUrl = "http://yukiabineko.sakura.ne.jp/windowsFomUpdate.php";
         string railsUrl = "https://uematsu-backend.herokuapp.com/items";
 
         public NewItem()

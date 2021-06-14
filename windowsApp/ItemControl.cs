@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Net;
 using System.IO;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Specialized;
 
@@ -87,17 +83,21 @@ namespace windowsApp
             var stream = await request.GetResponseAsync();
             var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
             array = JArray.Parse(reader);
-            using(WebClient wc = new WebClient())
+           
+            using (WebClient wc = new WebClient())
             {
                 foreach (var data in array)
                 {
                     try
                     {
+                        Bitmap bitmap = windowsApp.Properties.Resources.question;
                         string imgUrl = "http://yukiabineko.sakura.ne.jp/react/" + (string)data["name"] + ".jpg";
-                        
-
                         var st = wc.OpenRead(imgUrl);
-                        Bitmap bitmap = new Bitmap(st);
+                        try
+                        {
+                            bitmap = new Bitmap(st);
+                        }
+                        catch(Exception) { }
                         st.Close();
 
 
@@ -151,7 +151,7 @@ namespace windowsApp
                 DialogResult result = MessageBox.Show("削除しますか？", "", MessageBoxButtons.YesNo);
                 if(result == DialogResult.Yes)
                 {
-                    string deleteUrl = "http://192.168.1.7:8888/delete.php/";
+                    string deleteUrl = "http://yukiabineko.sakura.ne.jp/delete.php/";
                     string deleteItem = "http://192.168.1.7:3000/items/" + (string)obj["id"];
 
                     DataGridView dg = (DataGridView)sender;
