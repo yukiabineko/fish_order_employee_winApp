@@ -54,27 +54,37 @@ namespace windowsApp
                 wc.UploadValuesAsync(new Uri(sessinUrl), collection);
                 wc.UploadValuesCompleted += (s, o) =>
                 {
-                    var data = System.Text.Encoding.UTF8.GetString(o.Result);
-                    JObject obj = JObject.Parse(data);
-                    if(obj["name"] != null)
+                    try
                     {
-                        main.label1.Text = (string)obj["name"];
-                        main.label2.Text = (string)obj["email"];
-                        main.menu.Visible = true;
-                        this.Visible = false;
-                        main.setMail(textBox1.Text);
-                        main.setPass(textBox2.Text);
-                        main.menu.setMail(textBox1.Text);
-                        main.menu.setPass(textBox2.Text);
+                        var data = System.Text.Encoding.UTF8.GetString(o.Result);
+                        JObject obj = JObject.Parse(data);
+                        if (obj["name"] != null)
+                        {
+                            main.label1.Text = (string)obj["name"];
+                            main.label2.Text = (string)obj["email"];
+                            main.menu.Visible = true;
+                            this.Visible = false;
+                            main.setMail(textBox1.Text);
+                            main.setPass(textBox2.Text);
+                            main.menu.setMail(textBox1.Text);
+                            main.menu.setPass(textBox2.Text);
 
-                        MessageBox.Show("ログインしました。");
+                            MessageBox.Show("ログインしました。");
+                        }
+                        else
+                        {
+                            MessageBox.Show("認証失敗しました。");
+                            button1.Enabled = true;
+                        }
+                       
                     }
-                    else
+                    catch (Exception)
                     {
-                        MessageBox.Show("認証失敗しました。");
-                        button1.Enabled = true;
+                        MessageBox.Show("ログイン失敗しました。");
                     }
                     groupBox1.Visible = false;
+                    button1.Enabled = true;
+
                 };
             };
            

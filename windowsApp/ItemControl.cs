@@ -27,39 +27,52 @@ namespace windowsApp
             DataGridViewImageColumn imgCell = new DataGridViewImageColumn();
             imgCell.HeaderText = "画像";
             imgCell.ImageLayout = DataGridViewImageCellLayout.Zoom;
-            imgCell.Width = 130;
+            imgCell.Width = 80;
 
 
             DataGridViewTextBoxColumn nameCell = new DataGridViewTextBoxColumn();
             nameCell.HeaderText = "商品名";
-            nameCell.Width = 130;
+            nameCell.Width = 170;
 
             DataGridViewTextBoxColumn priceCell = new DataGridViewTextBoxColumn();
             priceCell.HeaderText = "価格";
-            priceCell.Width = 130;
+            priceCell.Width = 100;
 
-            DataGridViewTextBoxColumn cateCell = new DataGridViewTextBoxColumn();
-            cateCell.HeaderText = "カテゴリー";
-            cateCell.Width = 130;
+            DataGridViewButtonColumn processCell = new DataGridViewButtonColumn();
+            processCell.HeaderText = "加工法管理";
+            processCell.Name = "process";
+            processCell.Text = "管理";
+            processCell.UseColumnTextForButtonValue = true;
+            processCell.Width = 150;
+            processCell.FlatStyle = FlatStyle.Flat;
+            processCell.DefaultCellStyle.BackColor = Color.Blue;
+            processCell.DefaultCellStyle.ForeColor = Color.White;
+
 
             DataGridViewButtonColumn editCell = new DataGridViewButtonColumn();
             editCell.HeaderText = "編集";
             editCell.Name = "edit";
             editCell.Text = "編集";
             editCell.UseColumnTextForButtonValue = true;
-            editCell.Width = 130;
+            editCell.Width = 120;
+            editCell.FlatStyle = FlatStyle.Flat;
+            editCell.DefaultCellStyle.BackColor = Color.Blue;
+            editCell.DefaultCellStyle.ForeColor = Color.White;
 
             DataGridViewButtonColumn deleteCell = new DataGridViewButtonColumn();
             deleteCell.HeaderText = "削除";
             deleteCell.Name = "delete";
             deleteCell.Text = "削除";
             deleteCell.UseColumnTextForButtonValue = true;
-            deleteCell.Width = 130;
+            deleteCell.Width = 120;
+            deleteCell.FlatStyle = FlatStyle.Flat;
+            deleteCell.DefaultCellStyle.BackColor = Color.Red;
+            deleteCell.DefaultCellStyle.ForeColor = Color.White;
 
             dataGridView1.Columns.Add(imgCell);
             dataGridView1.Columns.Add(nameCell);
             dataGridView1.Columns.Add(priceCell);
-            dataGridView1.Columns.Add(cateCell);
+            dataGridView1.Columns.Add(processCell);
             dataGridView1.Columns.Add(editCell);
             dataGridView1.Columns.Add(deleteCell);
 
@@ -83,24 +96,17 @@ namespace windowsApp
             var stream = await request.GetResponseAsync();
             var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
             array = JArray.Parse(reader);
-           
+            Bitmap bitmap = windowsApp.Properties.Resources.question;
             using (WebClient wc = new WebClient())
             {
                 foreach (var data in array)
                 {
                     try
                     {
-                        Bitmap bitmap = windowsApp.Properties.Resources.question;
                         string imgUrl = "http://yukiabineko.sakura.ne.jp/react/" + (string)data["name"] + ".jpg";
                         var st = wc.OpenRead(imgUrl);
-                        try
-                        {
-                            bitmap = new Bitmap(st);
-                        }
-                        catch(Exception) { }
+                        bitmap = new Bitmap(st);
                         st.Close();
-
-
                         dataGridView1.Rows.Add(
                             bitmap,
                             data["name"],
@@ -108,7 +114,19 @@ namespace windowsApp
                             data["category"]
                         );
                     }
-                    catch (Exception) { }
+                    catch (Exception) {
+
+                        string imgUrl = "http://yukiabineko.sakura.ne.jp/react/question.png";
+                        var st = wc.OpenRead(imgUrl);
+                        bitmap = new Bitmap(st);
+                        st.Close();
+                        dataGridView1.Rows.Add(
+                            bitmap,
+                            data["name"],
+                            data["price"],
+                            data["category"]
+                        );
+                    }
                     groupBox1.Visible = false;
                 }
             };
@@ -181,6 +199,12 @@ namespace windowsApp
                         };
                     };
                 }
+            }
+            else if(dgv.Columns[e.ColumnIndex].Name == "process")
+            {
+                Process process = new Process();
+                process.ShowDialog(this);
+                process.Dispose();
             }
             else
             {

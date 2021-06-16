@@ -26,3 +26,4 @@ C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.Product.resources
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.ProductNew.resources
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.Properties.Resources.resources
+C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.Process.resources

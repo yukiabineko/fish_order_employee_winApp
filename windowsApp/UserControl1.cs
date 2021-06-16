@@ -48,7 +48,9 @@ namespace windowsApp
             deleteBtn.Name = "delete";
             deleteBtn.Text = "削除";
             deleteBtn.Width = 160;
-
+            deleteBtn.FlatStyle = FlatStyle.Flat;
+            deleteBtn.DefaultCellStyle.BackColor = Color.Red;
+            deleteBtn.DefaultCellStyle.ForeColor = Color.White;
 
 
             dataGridView1.Columns.Add(nameColumn);
@@ -78,29 +80,35 @@ namespace windowsApp
             {
                 progressBar1.Value = i;
             }
-
-            using (WebClient webClient = new WebClient())
+            try
             {
-                NameValueCollection collection = new NameValueCollection();
-                collection.Add("email", menu.getMail());
-                collection.Add("password", menu.getPass());
-                webClient.UploadValuesAsync(new Uri(usersUrl), collection);
-                webClient.UploadValuesCompleted += (s, o) =>
+                using (WebClient webClient = new WebClient())
                 {
-                    string data = System.Text.Encoding.UTF8.GetString(o.Result);
-                    array = JArray.Parse(data);
-                    foreach(var obj in array)
+                    NameValueCollection collection = new NameValueCollection();
+                    collection.Add("email", menu.getMail());
+                    collection.Add("password", menu.getPass());
+                    webClient.UploadValuesAsync(new Uri(usersUrl), collection);
+                    webClient.UploadValuesCompleted += (s, o) =>
                     {
-                        dataGridView1.Rows.Add(
-                            obj["name"],
-                            obj["email"],
-                            obj["tel"]
-                        );
-                    }
-                    groupBox1.Visible = false;
-                };
+                        string data = System.Text.Encoding.UTF8.GetString(o.Result);
+                        array = JArray.Parse(data);
+                        foreach (var obj in array)
+                        {
+                            dataGridView1.Rows.Add(
+                                obj["name"],
+                                obj["email"],
+                                obj["tel"]
+                            );
+                        }
+                        groupBox1.Visible = false;
+                    };
 
-            };
+                };
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("データの取得に失敗しました。ネットワーク等ご確認ください。");
+            }
            
         }
 
