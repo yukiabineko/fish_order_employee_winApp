@@ -45,17 +45,17 @@ namespace windowsApp
             total.Width = 140;
 
             DataGridViewButtonColumn edit = new DataGridViewButtonColumn();
-            edit.Name = "edit";
             edit.Text = "編集";
             edit.Name = "edit";
+            edit.FlatStyle = FlatStyle.Flat;
             edit.UseColumnTextForButtonValue = true;
             edit.Width = 140;
 
 
             DataGridViewButtonColumn delete = new DataGridViewButtonColumn();
-            delete.Name = "delete";
             delete.Text = "削除";
             delete.Name = "delete";
+            delete.FlatStyle = FlatStyle.Flat;
             delete.UseColumnTextForButtonValue = true;
             delete.Width = 140;
 
@@ -82,6 +82,7 @@ namespace windowsApp
 
         private void button3_Click(object sender, EventArgs e)
         {
+            dataGridView1.Rows.Clear();
             groupBox1.Visible = true;
             for(var i = progressBar1.Minimum; i<progressBar1.Maximum; i++)
             {
@@ -90,23 +91,31 @@ namespace windowsApp
             string url = "https://uematsu-backend.herokuapp.com/orders";
             using(WebClient webClient = new WebClient())
             {
-                webClient.DownloadStringAsync(new Uri(url));
-                webClient.DownloadStringCompleted += (s, o) =>
+                try
                 {
-                    string data = o.Result;
-                    JArray array = JArray.Parse(data);
-                    Console.WriteLine(data);
-                    foreach(var arr in array)
+                    webClient.DownloadStringAsync(new Uri(url));
+                    webClient.DownloadStringCompleted += (s, o) =>
                     {
-                        dataGridView1.Rows.Add(
-                           arr["name"],
-                           arr["price"],
-                           arr["stock"],
-                           arr["process"]
-                       );
+                        string data = o.Result;
+                        JArray array = JArray.Parse(data);
+                        Console.WriteLine(data);
+                        foreach (var arr in array)
+                        {
+                            dataGridView1.Rows.Add(
+                               arr["name"],
+                               arr["price"],
+                               arr["stock"],
+                               (int)arr["price"] * (int)arr["stock"]
+
+                           );
+                        };
+                        groupBox1.Visible = false;
                     };
-                    groupBox1.Visible = false;
-                };
+                }
+                catch (Exception) {
+                    MessageBox.Show("データ取得に失敗しました。ネットワークをご確認ください。");
+                }
+                
                
            
             };
