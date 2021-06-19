@@ -203,6 +203,7 @@ namespace windowsApp
             else if(dgv.Columns[e.ColumnIndex].Name == "process")
             {
                 Process process = new Process();
+                process.setId((string)obj["id"]);
                 process.ShowDialog(this);
                 process.Dispose();
             }
