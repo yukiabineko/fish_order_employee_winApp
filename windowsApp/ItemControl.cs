@@ -140,12 +140,12 @@ namespace windowsApp
             newItem.Dispose();
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
+        private  void groupBox1_Enter(object sender, EventArgs e)
         {
 
         }
 
-        private void button_action(object sender, DataGridViewCellEventArgs e)
+        private async void button_action(object sender, DataGridViewCellEventArgs e)
         {
             DataGridView dgv = (DataGridView)sender;
             JToken obj = array[e.RowIndex];
@@ -170,7 +170,7 @@ namespace windowsApp
                 if(result == DialogResult.Yes)
                 {
                     string deleteUrl = "http://yukiabineko.sakura.ne.jp/delete.php/";
-                    string deleteItem = "http://192.168.1.7:3000/items/" + (string)obj["id"];
+                    string deleteItem = "https://uematsu-backend.herokuapp.com/items/" + (string)obj["id"];
 
                     DataGridView dg = (DataGridView)sender;
 
@@ -181,23 +181,25 @@ namespace windowsApp
                         collection.Add("name", (string)obj["name"]);
                         webClient.UploadValuesAsync(new Uri(deleteUrl), collection);
                     };
-                    using(WebClient wc = new WebClient())
+                    try
                     {
-                        NameValueCollection collection = new NameValueCollection();
-                        collection.Add("id", (string)obj["id"]);
-                        wc.QueryString = collection;
-                        wc.UploadValuesAsync(new Uri(deleteItem),"DELETE", collection);
-                        wc.UploadValuesCompleted += (s, o) =>
+                        WebRequest delrequest = WebRequest.Create(deleteItem);
+                        delrequest.Method = "DELETE";
+                        var stream = await delrequest.GetResponseAsync();
+                        var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
+                        JObject ob = JObject.Parse(reader);
+                        stream.Close();
+                        MessageBox.Show((string)ob["message"]);
+                        dg.Rows[e.RowIndex].Visible = false;
+                        foreach (DataGridViewRow r in dgv.SelectedRows)
                         {
-                            dg.Rows[e.RowIndex].Visible = false;
-                            foreach(DataGridViewRow r in dgv.SelectedRows)
-                            {
-                                dataGridView1.Rows.Remove(r);
-                            }
-
-                            MessageBox.Show("削除しました。");
-                        };
-                    };
+                            dataGridView1.Rows.Remove(r);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("削除失敗");
+                    }
                 }
             }
             else if(dgv.Columns[e.ColumnIndex].Name == "process")

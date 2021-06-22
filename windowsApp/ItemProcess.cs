@@ -70,7 +70,7 @@ namespace windowsApp
             dataGridView1.Columns.Add(processName);
             dataGridView1.Columns.Add(deleteBtn);
 
-            string processUrl = "https://uematsu-backend.herokuapp.com/processings/" + id;
+            string processUrl = "https://uematsu-backend.herokuapp.com/processings/" + this.id;
             try
             {
                 WebRequest webRequest = WebRequest.Create(processUrl);
@@ -90,14 +90,34 @@ namespace windowsApp
 
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridView dgv = (DataGridView)sender;
             if(dgv.Columns[e.ColumnIndex].Name == "削除")
             {
-                string delid = (string)array[e.RowIndex]["id"];
-                Console.WriteLine(delid);
-                MessageBox.Show("削除");
+                try
+                {
+                    string delid = (string)array[e.RowIndex]["id"];
+                    Console.WriteLine(delid);
+                    string delUrl = "https://uematsu-backend.herokuapp.com/processings/" + delid;
+                    WebRequest webRequest = WebRequest.Create(delUrl);
+                    webRequest.Method = "DELETE";
+                    var stream = await webRequest.GetResponseAsync();
+                    var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
+                    JObject obj = JObject.Parse(reader);
+                    stream.Close();
+                    MessageBox.Show((string)obj["message"]);
+                    dgv.Rows[e.RowIndex].Visible = false;
+                    foreach (DataGridViewRow r in dgv.SelectedRows)
+                    {
+                        dataGridView1.Rows.Remove(r);
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("失敗しました。");
+                }
+               
             }
         }
 
