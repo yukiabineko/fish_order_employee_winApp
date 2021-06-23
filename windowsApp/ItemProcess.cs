@@ -24,7 +24,7 @@ namespace windowsApp
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private  void button1_Click(object sender, EventArgs e)
         {
            
             string posturl = "https://uematsu-backend.herokuapp.com/processings";
@@ -40,12 +40,32 @@ namespace windowsApp
                     collection.Add("win_processes", strings);
                     webClient.QueryString = getCollection;
                     webClient.UploadValuesAsync(new Uri(posturl), collection);
-                    webClient.UploadValuesCompleted += (s, o) =>
+                    webClient.UploadValuesCompleted += async (s, o) =>
                     {
                         string result = System.Text.Encoding.UTF8.GetString(o.Result);
                         JToken token = JToken.Parse(result);
-                        MessageBox.Show((string)token["message"]);
-                        this.Close();
+                        DialogResult box = MessageBox.Show((string)token["message"],"",MessageBoxButtons.OK);
+                        if(box == DialogResult.OK)
+                        {
+                            try
+                            {
+                                string processUrl = "https://uematsu-backend.herokuapp.com/processings/" + this.id;
+                                dataGridView1.Rows.Clear();
+                                WebRequest request = WebRequest.Create(processUrl);
+                                var stream = await request.GetResponseAsync();
+                                var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
+                                JArray newArray = JArray.Parse(reader);
+                                foreach (var arr in newArray)
+                                {
+                                    dataGridView1.Rows.Add(arr["processing_name"]);
+                                }
+                            }
+                            catch (Exception) { }
+                        }
+                        else
+                        {
+                            Console.WriteLine("danger");
+                        }
                     };
                 }
                 catch (Exception) { }

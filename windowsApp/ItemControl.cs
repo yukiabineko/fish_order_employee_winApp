@@ -11,7 +11,7 @@ namespace windowsApp
 {
     public partial class ItemControl : UserControl
     {
-        JArray array;
+        public JArray array;
 
         public ItemControl()
         {
@@ -127,8 +127,9 @@ namespace windowsApp
                             data["category"]
                         );
                     }
-                    groupBox1.Visible = false;
+                   
                 }
+                groupBox1.Visible = false;
             };
            
         }
@@ -136,6 +137,7 @@ namespace windowsApp
         private void button2_Click(object sender, EventArgs e)
         {
             NewItem newItem = new NewItem();
+            newItem.itemControl = this;
             newItem.ShowDialog(this);
             newItem.Dispose();
         }
@@ -148,6 +150,10 @@ namespace windowsApp
         private async void button_action(object sender, DataGridViewCellEventArgs e)
         {
             DataGridView dgv = (DataGridView)sender;
+            Console.WriteLine(array);
+            Console.WriteLine("番号");
+            Console.WriteLine(e.RowIndex);
+
             JToken obj = array[e.RowIndex];
 
             if(dgv.Columns[e.ColumnIndex].Name == "edit")

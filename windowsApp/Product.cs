@@ -126,7 +126,8 @@ namespace windowsApp
             DataGridView dgv = (DataGridView)sender;
             if(dgv.Columns[e.ColumnIndex].Name == "edit")
             {
-                MessageBox.Show("edit");
+                ProdoctEdit prodoctEdit = new ProdoctEdit();
+                prodoctEdit.ShowDialog(this);
             }
             else {
                 MessageBox.Show("delete");
