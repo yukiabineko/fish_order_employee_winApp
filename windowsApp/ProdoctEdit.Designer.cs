@@ -115,6 +115,7 @@ namespace windowsApp
             this.button1.TabIndex = 6;
             this.button1.Text = "編集";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // ProdoctEdit
             // 
@@ -130,6 +131,7 @@ namespace windowsApp
             this.Controls.Add(this.label1);
             this.Name = "ProdoctEdit";
             this.Text = "店頭商品編集";
+            this.Load += new System.EventHandler(this.ProdoctEdit_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -2,16 +2,18 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Net;
+using System.IO;
 using Newtonsoft.Json.Linq;
 
 namespace windowsApp
 {
     public partial class Product : UserControl
     {
-        private JArray items;
+        public JArray items;
         public Menu main;
         private string email = "";
         private string pass = "";
+        public ProdoctEdit prodoctEdit;
 
         public Product()
         {
@@ -97,9 +99,9 @@ namespace windowsApp
                     webClient.DownloadStringCompleted += (s, o) =>
                     {
                         string data = o.Result;
-                        JArray array = JArray.Parse(data);
+                        items = JArray.Parse(data);
                         Console.WriteLine(data);
-                        foreach (var arr in array)
+                        foreach (var arr in items)
                         {
                             dataGridView1.Rows.Add(
                                arr["name"],
@@ -121,16 +123,50 @@ namespace windowsApp
             };
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridView dgv = (DataGridView)sender;
             if(dgv.Columns[e.ColumnIndex].Name == "edit")
             {
-                ProdoctEdit prodoctEdit = new ProdoctEdit();
+                JToken item = items[e.RowIndex];
+                prodoctEdit = new ProdoctEdit();
+                prodoctEdit.main = this;
+                prodoctEdit.setParameter(
+                    (string)item["id"],
+                    (string)item["name"], 
+                    (string)item["stock"],
+                    (string)item["price"]
+                );
                 prodoctEdit.ShowDialog(this);
             }
+            /*削除処理*/
             else {
-                MessageBox.Show("delete");
+                JToken jToken = items[e.RowIndex];
+                MessageBox.Show((string)jToken["id"]);
+                string url = "https://uematsu-backend.herokuapp.com/orders/" + (string)jToken["id"];
+
+                /*
+                try
+                {
+                    WebRequest delrequest = WebRequest.Create(url);
+                    delrequest.Method = "DELETE";
+                    var stream = await delrequest.GetResponseAsync();
+                    var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
+                    JObject ob = JObject.Parse(reader);
+                    stream.Close();
+                    MessageBox.Show((string)ob["message"]);
+                    dg.Rows[e.RowIndex].Visible = false;
+                    foreach (DataGridViewRow r in dgv.SelectedRows)
+                    {
+                        dataGridView1.Rows.Remove(r);
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("削除失敗");
+                }
+                */
+
             }
         }
 
