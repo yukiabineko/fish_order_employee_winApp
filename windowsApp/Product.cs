@@ -10,6 +10,7 @@ namespace windowsApp
     public partial class Product : UserControl
     {
         public JArray items;
+        public JArray products;
         public Menu main;
         private string email = "";
         private string pass = "";
@@ -99,9 +100,9 @@ namespace windowsApp
                     webClient.DownloadStringCompleted += (s, o) =>
                     {
                         string data = o.Result;
-                        items = JArray.Parse(data);
+                        products = JArray.Parse(data);
                         Console.WriteLine(data);
-                        foreach (var arr in items)
+                        foreach (var arr in products)
                         {
                             dataGridView1.Rows.Add(
                                arr["name"],
@@ -141,42 +142,52 @@ namespace windowsApp
             }
             /*削除処理*/
             else {
+                DataGridView dg = (DataGridView)sender;
                 JToken jToken = items[e.RowIndex];
-                MessageBox.Show((string)jToken["id"]);
                 string url = "https://uematsu-backend.herokuapp.com/orders/" + (string)jToken["id"];
-
-                /*
-                try
+                DialogResult result = MessageBox.Show("削除しますか？", "", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
                 {
-                    WebRequest delrequest = WebRequest.Create(url);
-                    delrequest.Method = "DELETE";
-                    var stream = await delrequest.GetResponseAsync();
-                    var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
-                    JObject ob = JObject.Parse(reader);
-                    stream.Close();
-                    MessageBox.Show((string)ob["message"]);
-                    dg.Rows[e.RowIndex].Visible = false;
-                    foreach (DataGridViewRow r in dgv.SelectedRows)
+                    try
                     {
-                        dataGridView1.Rows.Remove(r);
+                        WebRequest delrequest = WebRequest.Create(url);
+                        delrequest.Method = "DELETE";
+                        var stream = await delrequest.GetResponseAsync();
+                        var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
+                        JObject ob = JObject.Parse(reader);
+                        stream.Close();
+                        MessageBox.Show((string)ob["message"]);
+                        dg.Rows[e.RowIndex].Visible = false;
+                        foreach (DataGridViewRow r in dgv.SelectedRows)
+                        {
+                            dataGridView1.Rows.Remove(r);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("削除失敗");
                     }
                 }
-                catch (Exception)
-                {
-                    MessageBox.Show("削除失敗");
-                }
-                */
 
             }
         }
 
-        private void Product_Load(object sender, EventArgs e)
+        private async void Product_Load(object sender, EventArgs e)
         {
             this.setEmail(main.getMail());
             this.setPass(main.getPass());
 
+            try
+            {
+                WebRequest request = WebRequest.Create("https://uematsu-backend.herokuapp.com/items");
+                var stream = await request.GetResponseAsync();
+                var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
+                items = JArray.Parse(reader);
+                button1.Visible = true;
+            }
+            catch (Exception) { }
 
-            using(WebClient webClient = new WebClient())
+            /*using(WebClient webClient = new WebClient())
             {
                 string itemUrl = "https://uematsu-backend.herokuapp.com/items";
                 webClient.DownloadDataAsync(new Uri(itemUrl));
@@ -189,11 +200,13 @@ namespace windowsApp
 
 
             };
+            */
             
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Console.WriteLine(items);
             ProductNew productNew = new ProductNew();
             productNew.setArray(items);
             productNew.setEmail(email);
@@ -220,6 +233,29 @@ namespace windowsApp
             return this.pass;
         }
 
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            string url = "https://uematsu-backend.herokuapp.com/orders/deleteAll";
+            DialogResult result = MessageBox.Show("全ての店頭商品を削除します。よろしいですか？", "", MessageBoxButtons.YesNo);
+            if(result == DialogResult.Yes)
+            {
+                try
+                {
+                    WebRequest delrequest = WebRequest.Create(url);
+                    var stream = await delrequest.GetResponseAsync();
+                    var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
+                    JObject ob = JObject.Parse(reader);
+                    stream.Close();
+                    MessageBox.Show((string)ob["message"]);
+                    dataGridView1.Rows.Clear();
+                    
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("削除失敗");
+                }
+            }
+        }
 
     }
 }
