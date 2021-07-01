@@ -13,6 +13,7 @@ namespace windowsApp
         private string[] str;
         private string email = "";
         private string pass = "";
+        public Product main;
 
         public ProductNew()
         {
@@ -69,7 +70,6 @@ namespace windowsApp
             }
             else
             {
-                MessageBox.Show("ok。");
                 string url = "https://uematsu-backend.herokuapp.com/orders";
                 using(WebClient webClient = new WebClient())
                 {
@@ -81,7 +81,46 @@ namespace windowsApp
                     webClient.UploadValuesAsync(new Uri(url), collection);
                     webClient.UploadValuesCompleted += (o, s) =>
                     {
-                        MessageBox.Show("登録しました。");
+                        try
+                        {
+                            string resStr = System.Text.Encoding.UTF8.GetString(s.Result);
+                            JToken token = JToken.Parse(resStr);
+                            MessageBox.Show((string)token["message"]);
+                            this.Close();
+                            main.products.Clear();
+                            main.dataGridView1.Rows.Clear();
+                            string url = "https://uematsu-backend.herokuapp.com/orders";
+                            using (WebClient webClient = new WebClient())
+                            {
+                                try
+                                {
+                                    webClient.DownloadStringAsync(new Uri(url));
+                                    webClient.DownloadStringCompleted += (s, o) =>
+                                    {
+                                        string data = o.Result;
+                                        main.products = JArray.Parse(data);
+                                        Console.WriteLine(data);
+                                        foreach (var arr in main.products)
+                                        {
+                                            main.dataGridView1.Rows.Add(
+                                               arr["name"],
+                                               arr["price"],
+                                               arr["stock"],
+                                               (int)arr["price"] * (int)arr["stock"]
+
+                                           );
+                                        };
+                                    };
+                                }
+                                catch (Exception){}
+                            };
+
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("登録失敗しました。");
+                        }
+                       
                     };
                 };
             }

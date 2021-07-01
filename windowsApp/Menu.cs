@@ -16,6 +16,7 @@ namespace windowsApp
         public ItemControl items;
         public UserOrder userOrder;
         public Product product;
+        public OrdersControl orders;
 
         public Menu()
         {
@@ -24,17 +25,20 @@ namespace windowsApp
             users = new UserControl1();
             product = new Product();
             product.main = this;
-            
+            orders = new OrdersControl();
+            orders.main = this;
 
 
             tabPage1.Text = "商品管理";
             tabPage2.Text = "会員管理";
             tabPage3.Text = "店頭商品管理";
+            tabPage4.Text = "本日注文状況";
             users.menu = this;
             
             tabPage1.Controls.Add(items);
             tabPage2.Controls.Add(users);
             tabPage3.Controls.Add(product);
+            tabPage4.Controls.Add(orders);
             
         }
 

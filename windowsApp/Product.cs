@@ -208,6 +208,7 @@ namespace windowsApp
         {
             Console.WriteLine(items);
             ProductNew productNew = new ProductNew();
+            productNew.main = this;
             productNew.setArray(items);
             productNew.setEmail(email);
             productNew.setPass(pass);
