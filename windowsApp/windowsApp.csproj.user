@@ -22,6 +22,9 @@
     <Compile Update="NewItem.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="OrderProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="OrdersControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
