@@ -87,7 +87,10 @@ namespace windowsApp
                             JToken token = JToken.Parse(resStr);
                             MessageBox.Show((string)token["message"]);
                             this.Close();
-                            main.products.Clear();
+                            if (main.products != null) {
+                                main.products.Clear();
+                            }
+                            
                             main.dataGridView1.Rows.Clear();
                             string url = "https://uematsu-backend.herokuapp.com/orders";
                             using (WebClient webClient = new WebClient())

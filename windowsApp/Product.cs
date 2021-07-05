@@ -129,7 +129,8 @@ namespace windowsApp
             DataGridView dgv = (DataGridView)sender;
             if(dgv.Columns[e.ColumnIndex].Name == "edit")
             {
-                JToken item = items[e.RowIndex];
+                Console.WriteLine(items);
+                JToken item = products[e.RowIndex];
                 prodoctEdit = new ProdoctEdit();
                 prodoctEdit.main = this;
                 prodoctEdit.setParameter(

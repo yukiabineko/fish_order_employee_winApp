@@ -16,6 +16,8 @@ namespace windowsApp
     {
         public Menu main;
         public JArray todayData;
+        private string mail;
+        private string pass;
 
 
         public OrdersControl()
@@ -69,65 +71,10 @@ namespace windowsApp
             dataGridView1.Columns.Add(status);
             dataGridView1.Columns.Add(total);
 
-            string mail = main.getMail();
-            string pass = main.getPass();
-          
-            using (WebClient webClient = new WebClient())
-            {
-                string url = "https://uematsu-backend.herokuapp.com/shoppings/index";
-                NameValueCollection collection = new NameValueCollection();
-                collection.Add("email", mail);
-                collection.Add("password", pass);
-                try
-                {
-                    webClient.UploadValuesAsync(new Uri(url), collection);
-                    webClient.UploadValuesCompleted += (s, o) =>
-                    {
-                        string resStr = System.Text.Encoding.UTF8.GetString(o.Result);
-                        JArray array = JArray.Parse(resStr);
-                        todayData = setToday(array);  //本日の注文
-                        Console.WriteLine(todayData);
-                        foreach(var data in todayData)
-                        {
-                            dataGridView1.Rows.Add(
-                                data["user_name"],
-                                GetTime((string)data["receiving_time"]),
-                                data["name"],
-                                data["process"],
-                                SetStatusView((string)data["status"]),
-                                data["num"]
-                            );
-                        }
-                        //分岐で変更
-                        for (var i = 0; i < todayData.Count; i++)
-                        {
-                            if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "申請中")
-                            {
-                                dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.White;
-                                dataGridView1.Rows[i].Cells[4].Style.BackColor = Color.Blue;
-                                dataGridView1.Rows[i].Cells[4].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                            }
-                            else if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "加工済み")
-                            {
-                                dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.White;
-                                dataGridView1.Rows[i].Cells[4].Style.BackColor = Color.Orange;
-                                dataGridView1.Rows[i].Cells[4].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                            }
-                            else
-                            {
-                                dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.White;
-                                dataGridView1.Rows[i].Cells[4].Style.BackColor = Color.Red;
-                                dataGridView1.Rows[i].Cells[4].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                            }
-                        }
-
-                    };
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("データの取得失敗しました。ネットワークの確認してください。");
-                }
-            };
+             mail = main.getMail();
+             pass = main.getPass();
+             GetIndex();
+            
 
         }
 
@@ -137,8 +84,9 @@ namespace windowsApp
             if (dgv.Columns[e.ColumnIndex].Name == "status")
             {
                 OrderProcess orderProcess = new OrderProcess();
+                orderProcess.main = this;
                 JToken token = todayData[e.RowIndex];
-                orderProcess.SetParameter(token);
+                orderProcess.SetParameter(token, mail, pass);
                 orderProcess.ShowDialog(this);
                 orderProcess.Dispose();
             }
@@ -161,7 +109,9 @@ namespace windowsApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            todayData.Clear();
+            dataGridView1.Rows.Clear();
+            GetIndex();
         }
         /*本日のデータの取得*/
         public JArray setToday(JArray array)
@@ -207,6 +157,67 @@ namespace windowsApp
             DateTime thistime = dateTime.ToLocalTime();
             return thistime.ToString("HH:mm");
         }
+        //データ一覧の取得
+        public void GetIndex()
+        {
+            using (WebClient webClient = new WebClient())
+            {
+                string url = "https://uematsu-backend.herokuapp.com/shoppings/index";
+                NameValueCollection collection = new NameValueCollection();
+                collection.Add("email", mail);
+                collection.Add("password", pass);
+                try
+                {
+                    webClient.UploadValuesAsync(new Uri(url), collection);
+                    webClient.UploadValuesCompleted += (s, o) =>
+                    {
+                        string resStr = System.Text.Encoding.UTF8.GetString(o.Result);
+                        JArray array = JArray.Parse(resStr);
+                        todayData = setToday(array);  //本日の注文
+                        Console.WriteLine(todayData);
+                        foreach (var data in todayData)
+                        {
+                            dataGridView1.Rows.Add(
+                                data["user_name"],
+                                GetTime((string)data["receiving_time"]),
+                                data["name"],
+                                data["process"],
+                                SetStatusView((string)data["status"]),
+                                data["num"]
+                            );
+                        }
+                        //分岐で変更
+                        for (var i = 0; i < todayData.Count; i++)
+                        {
+                            if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "申請中")
+                            {
+                                dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.White;
+                                dataGridView1.Rows[i].Cells[4].Style.BackColor = Color.Blue;
+                                dataGridView1.Rows[i].Cells[4].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                            }
+                            else if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "加工済み")
+                            {
+                                dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.White;
+                                dataGridView1.Rows[i].Cells[4].Style.BackColor = Color.Orange;
+                                dataGridView1.Rows[i].Cells[4].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                            }
+                            else
+                            {
+                                dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.White;
+                                dataGridView1.Rows[i].Cells[4].Style.BackColor = Color.Red;
+                                dataGridView1.Rows[i].Cells[4].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                            }
+                        }
+
+                    };
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("データの取得失敗しました。ネットワークの確認してください。");
+                }
+            };
+        }
+        //GetIndex
     }
    
 }

@@ -94,7 +94,7 @@ namespace windowsApp
         private void ProdoctEdit_Load(object sender, EventArgs e)
         {
             label1.Text = this.name;
-            numericUpDown1.Value = int.Parse(stock);
+            numericUpDown1.Value = Decimal.Parse(this.stock);
             textBox1.Text = this.price;
 
             
