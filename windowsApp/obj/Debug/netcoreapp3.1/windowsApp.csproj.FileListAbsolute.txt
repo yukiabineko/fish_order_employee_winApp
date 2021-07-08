@@ -31,3 +31,11 @@ C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.OrdersControl.resources
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.OrderProcess.resources
 C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.SalesControl.resources
+C:\Users\yukia\Desktop\windowsApp\windowsApp\bin\Debug\netcoreapp3.1\System.Data.SqlClient.dll
+C:\Users\yukia\Desktop\windowsApp\windowsApp\bin\Debug\netcoreapp3.1\System.Windows.Forms.DataVisualization.dll
+C:\Users\yukia\Desktop\windowsApp\windowsApp\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+C:\Users\yukia\Desktop\windowsApp\windowsApp\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+C:\Users\yukia\Desktop\windowsApp\windowsApp\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+C:\Users\yukia\Desktop\windowsApp\windowsApp\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\yukia\Desktop\windowsApp\windowsApp\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\yukia\Desktop\windowsApp\windowsApp\obj\Debug\netcoreapp3.1\windowsApp.SalesChart.resources
