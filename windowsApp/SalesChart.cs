@@ -6,11 +6,14 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using Newtonsoft.Json.Linq;
 
 namespace windowsApp
 {
     public partial class SalesChart : Form
     {
+        private JArray array;
+
         public SalesChart()
         {
             InitializeComponent();
@@ -29,20 +32,44 @@ namespace windowsApp
 
             ChartArea area = new ChartArea();
             Axis axis = new Axis();
-            axis.IntervalType = DateTimeIntervalType.Days;
+            axis.IntervalOffsetType = DateTimeIntervalType.Days;
             axis.Interval = 1.0d;
             area.AxisX = axis;
+            area.AxisX.MajorGrid.Enabled = false;
+            area.AxisY.MajorGrid.Enabled = false;
+            area.AxisX.Minimum = DateTime.Now.AddDays(-DateTime.Now.Day + 1).ToOADate();
+            
             area.AxisX.Title = "日付け";
             area.AxisY.Title = "売り上げ金額";
 
-            DateTime time = DateTime.Now;
-            DateTime time2 = time.AddDays(1);
-            series.Points.AddXY(time, 30);
-            series.Points.AddXY(time2, 100);
+            foreach(var arr in array)
+            {
+                DateTime tim = SetDay((string)arr["day"]);
+                DateTime time = tim.AddDays(0);
+                int sales = arr["合計"] == null? 0 : int.Parse((string)arr["合計"]);
+                series.Points.AddXY(time, sales);
+            }
             chart.Series.Add(series);
             chart.ChartAreas.Add(area);
+           
+
+
 
 
         }
+        public void SetArray(JArray array)
+        {
+            this.array = array;
+        }
+        public DateTime SetDay(string sendday)
+        {
+            DateTime nowData = DateTime.Now;
+            string getYear = nowData.ToString("yyyy");
+            string setDay = getYear + "/" + sendday;
+            DateTime newDay = DateTime.Parse(setDay);
+            return newDay;
+
+        }
+
     }
 }

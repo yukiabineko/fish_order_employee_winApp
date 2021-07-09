@@ -24,8 +24,7 @@ namespace windowsApp
 
         private async void SalesControl_Load(object sender, EventArgs e)
         {
-            SalesChart chart = new SalesChart();
-            chart.Show();
+           
 
             groupBox1.Visible = false;
             progressBar1.Visible = false;
@@ -64,11 +63,7 @@ namespace windowsApp
             dataGridView1.Columns.Add(saleColumn);
             dataGridView1.Columns.Add(rateColumn);
 
-            groupBox1.Visible = true;
-            for (var i = progressBar1.Minimum; i < progressBar1.Maximum; i += 10)
-            {
-                progressBar1.Value = i;
-            }
+            
             try
             {
                 WebRequest request = WebRequest.Create(dataUrl);
@@ -77,11 +72,24 @@ namespace windowsApp
                 var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
                 array = JArray.Parse(reader);
                 Console.WriteLine(array);
+                foreach(var arr in array)
+                {
+                    dataGridView1.Rows.Add(
+                        arr["day"],
+                        arr["week"],
+                        arr["num"] ?? "",
+                        arr["合計"] ?? ""
+                    );
+                }
+                SalesChart chart = new SalesChart();
+                chart.SetArray(array);
+                chart.Show();
             }
             catch (Exception)
             {
                 MessageBox.Show("データを取得できません。ネットワークの確認してください。");
             }
+
          
         }
 
