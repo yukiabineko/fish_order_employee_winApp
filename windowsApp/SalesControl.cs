@@ -16,6 +16,7 @@ namespace windowsApp
     {
         private string dataUrl = "https://uematsu-backend.herokuapp.com/sales";
         public JArray array;
+        private int total;
 
         public SalesControl()
         {
@@ -71,14 +72,17 @@ namespace windowsApp
                 var stream = await request.GetResponseAsync();
                 var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
                 array = JArray.Parse(reader);
-                Console.WriteLine(array);
+                total = GetSalesTotal(array);
+                label1.Text = "【売り上げ金額】" + total.ToString() + "円";
+               
                 foreach(var arr in array)
                 {
                     dataGridView1.Rows.Add(
                         arr["day"],
                         arr["week"],
                         arr["num"] ?? "",
-                        arr["合計"] ?? ""
+                        arr["合計"] ?? "",
+                        GetRate((string)arr["合計"],　total)
                     );
                 }
                 SalesChart chart = new SalesChart();
@@ -96,6 +100,32 @@ namespace windowsApp
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+        /* 売り上げ合計*/
+        public int GetSalesTotal(JArray array)
+        {
+            int total = 0;
+            foreach(var arr in array)
+            {
+                total += arr["合計"] == null ? 0 : int.Parse((string)arr["合計"]);
+            }
+            return total;
+        }
+        /*売り上げ構成比*/
+        public string  GetRate(string  sale, int total)
+        {
+            if(sale != null)
+            {
+                int num = int.Parse(sale);
+                double d = (double)num / total * 100;
+                Console.WriteLine(num);
+                Console.WriteLine(d);
+                return d.ToString();
+            }
+            else
+            {
+                return "";
+            }
         }
     }
 }
