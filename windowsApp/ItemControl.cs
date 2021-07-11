@@ -164,7 +164,8 @@ namespace windowsApp
                 itemEdit.textBox2.Text = (string)obj["name"];
                 itemEdit.textBox3.Text = (string)obj["price"];
                 itemEdit.comboBox1.SelectedItem = (string)obj["category"];
-
+                itemEdit.GetItemId((string)obj["id"]);
+                itemEdit.main = this;
 
                 itemEdit.ShowDialog(this);
                 itemEdit.Dispose();

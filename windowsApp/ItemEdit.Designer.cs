@@ -41,6 +41,7 @@ namespace windowsApp
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -137,7 +138,7 @@ namespace windowsApp
             // 
             this.button1.BackColor = System.Drawing.SystemColors.Highlight;
             this.button1.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.button1.Location = new System.Drawing.Point(916, 133);
+            this.button1.Location = new System.Drawing.Point(907, 131);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(112, 34);
             this.button1.TabIndex = 10;
@@ -156,6 +157,10 @@ namespace windowsApp
             this.button2.Text = "更新";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // ItemEdit
             // 
@@ -176,6 +181,7 @@ namespace windowsApp
             this.Controls.Add(this.pictureBox1);
             this.Name = "ItemEdit";
             this.Text = "ItemEdit";
+            this.Load += new System.EventHandler(this.ItemEdit_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -196,5 +202,6 @@ namespace windowsApp
         public System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

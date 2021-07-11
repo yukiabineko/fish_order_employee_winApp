@@ -39,6 +39,7 @@ namespace windowsApp
 
                     collection.Add("win_processes", strings);
                     webClient.QueryString = getCollection;
+                    
                     webClient.UploadValuesAsync(new Uri(posturl), collection);
                     webClient.UploadValuesCompleted += async (s, o) =>
                     {
@@ -51,11 +52,12 @@ namespace windowsApp
                             {
                                 string processUrl = "https://uematsu-backend.herokuapp.com/processings/" + this.id;
                                 dataGridView1.Rows.Clear();
+                                array.Clear();
                                 WebRequest request = WebRequest.Create(processUrl);
                                 var stream = await request.GetResponseAsync();
                                 var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
-                                JArray newArray = JArray.Parse(reader);
-                                foreach (var arr in newArray)
+                                array = JArray.Parse(reader);
+                                foreach (var arr in array)
                                 {
                                     dataGridView1.Rows.Add(arr["processing_name"]);
                                 }
@@ -161,6 +163,19 @@ namespace windowsApp
         public void setId(string id)
         {
             this.id = id;
+        }
+        /*既に登録済みのアイテムあるか確認*/
+        public bool CheckIncludeItem(string item)
+        {
+            bool res = true;
+            foreach (var arr in array)
+            {
+                if(item == (string)arr["processing_name"])
+                {
+                    res = false;
+                }
+            }
+            return res;
         }
     }
 }
