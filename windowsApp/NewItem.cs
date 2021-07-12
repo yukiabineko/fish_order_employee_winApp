@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Net;
 using System.IO;
@@ -52,7 +48,12 @@ namespace windowsApp
                 {
                     try
                     {
-                        itemControl.dataGridView1.Rows.Clear();
+                       itemControl.dataGridView1.Rows.Clear();
+                       itemControl.groupBox1.Visible = true;
+                        for (var i = itemControl.progressBar1.Minimum; i < itemControl.progressBar1.Maximum;  i += 10)
+                        {
+                          itemControl.progressBar1.Value = i;
+                        }
                         WebRequest request = WebRequest.Create("https://uematsu-backend.herokuapp.com/items");
                         var stream = await request.GetResponseAsync();
                         var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
@@ -90,6 +91,7 @@ namespace windowsApp
                                     );
                                 }
                             }
+                            itemControl.groupBox1.Visible = false;
                         };
                     }
                     catch (Exception) { }
@@ -108,7 +110,7 @@ namespace windowsApp
 
         private void NewItem_Load(object sender, EventArgs e)
         {
-
+            textBox1.ReadOnly = true;
         }
     }
 }

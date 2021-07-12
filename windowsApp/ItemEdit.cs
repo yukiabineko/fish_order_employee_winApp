@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Net;
 using System.IO;
@@ -22,6 +18,7 @@ namespace windowsApp
         public ItemEdit()
         {
             InitializeComponent();
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -33,6 +30,11 @@ namespace windowsApp
         private void button2_Click(object sender, EventArgs e)
         {
             string railsUrl = "https://uematsu-backend.herokuapp.com/items/" + itemId;
+            main.groupBox1.Visible = true;
+            for (var i = main.progressBar1.Minimum; i < main.progressBar1.Maximum; i += 10)
+            {
+                main.progressBar1.Value = i;
+            }
             using (WebClient webClient = new WebClient())
             {
                 NameValueCollection collection = new NameValueCollection();
@@ -90,6 +92,7 @@ namespace windowsApp
                                     );
                                 }
                             }
+                            main.groupBox1.Visible = false;
                         };
                     }
                     catch (Exception) { }
@@ -103,7 +106,7 @@ namespace windowsApp
 
         private void ItemEdit_Load(object sender, EventArgs e)
         {
-            Console.WriteLine(itemId);
+            textBox1.ReadOnly = true;
         }
         public void GetItemId(string id)
         {
