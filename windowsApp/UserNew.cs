@@ -8,12 +8,17 @@ using System.Windows.Forms;
 using System.Net;
 using System.IO;
 using System.Collections.Specialized;
+using Newtonsoft.Json.Linq;
 
 
 namespace windowsApp
 {
     public partial class UserNew : Form
     {
+        public UserControl1 main;
+        private string mail;
+        private string pass;
+
         public UserNew()
         {
             InitializeComponent();
@@ -46,19 +51,74 @@ namespace windowsApp
                 else
                 {
                     string userAddUrl = "https://uematsu-backend.herokuapp.com/users";
-
-                    collection.Add("name", textBox1.Text);
-                    collection.Add("email", textBox2.Text);
-                    collection.Add("tel", textBox3.Text);
-                    collection.Add("password", textBox4.Text);
-                    collection.Add("password_confirmation", textBox5.Text);
-                    webClient.UploadValuesAsync(new Uri(userAddUrl), collection);
-                    webClient.UploadValuesCompleted += (s, o) =>
+                    try
                     {
-                        MessageBox.Show("登録しました。");
-                        this.Close();
-                    };
+                        collection.Add("name", textBox1.Text);
+                        collection.Add("email", textBox2.Text);
+                        collection.Add("tel", textBox3.Text);
+                        collection.Add("password", textBox4.Text);
+                        collection.Add("password_confirmation", textBox5.Text);
+                        webClient.UploadValuesAsync(new Uri(userAddUrl), collection);
+                        webClient.UploadValuesCompleted += (s, o) =>
+                        {
+                            MessageBox.Show("登録しました。");
+                            this.Close();
+                            try
+                            {
+                              
+                               
+                                string usersUrl = "https://uematsu-backend.herokuapp.com/users/index";
+                                main.groupBox1.Visible = true;
+                                main.progressBar1.Visible = true;
 
+
+                                for (var i = main.progressBar1.Minimum; i < main.progressBar1.Maximum; i += 10)
+                                {
+                                    main.progressBar1.Value = i;
+                                }
+                                try
+                                {
+                                    using (WebClient webClient = new WebClient())
+                                    {
+                                        NameValueCollection collection = new NameValueCollection();
+                                        collection.Add("email", this.mail);
+                                        collection.Add("password", this.pass);
+                                        webClient.UploadValuesAsync(new Uri(usersUrl), collection);
+                                        webClient.UploadValuesCompleted += (s, o) =>
+                                        {
+                                            string data = System.Text.Encoding.UTF8.GetString(o.Result);
+                                            if (main.array != null)
+                                            {
+                                                main.array.Clear();
+                                            }
+                                            main.array = JArray.Parse(data);
+                                            main.dataGridView1.Rows.Clear();
+                                            foreach (var obj in main.array)
+                                            {
+                                                main.dataGridView1.Rows.Add(
+                                                    obj["name"],
+                                                    obj["email"],
+                                                    obj["tel"]
+                                                );
+                                            }
+                                            main.groupBox1.Visible = false;
+                                        };
+
+                                    };
+                                }
+                                catch (Exception)
+                                {
+                                    MessageBox.Show("データの取得に失敗しました。ネットワーク等ご確認ください。");
+                                }
+                            }
+                            catch (Exception) { }
+                        };
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("登録失敗しました。ネットワークの確認をしてください。");
+                    }
+                   
                 }
                 
 
@@ -104,6 +164,13 @@ namespace windowsApp
             }
 
             return true;
+        }
+        /*セッティング*/
+        public void SetData(string e, string p)
+        {
+            this.mail = e;
+            this.pass = p;
+          
         }
     }
 }

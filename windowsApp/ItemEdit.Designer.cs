@@ -42,6 +42,7 @@ namespace windowsApp
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.infolabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -119,6 +120,7 @@ namespace windowsApp
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(466, 31);
             this.textBox3.TabIndex = 8;
+            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox3_KeyPress);
             // 
             // comboBox1
             // 
@@ -162,11 +164,23 @@ namespace windowsApp
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // infolabel
+            // 
+            this.infolabel.AutoSize = true;
+            this.infolabel.Font = new System.Drawing.Font("Yu Gothic UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.infolabel.ForeColor = System.Drawing.Color.Red;
+            this.infolabel.Location = new System.Drawing.Point(608, 309);
+            this.infolabel.Name = "infolabel";
+            this.infolabel.Size = new System.Drawing.Size(366, 28);
+            this.infolabel.TabIndex = 12;
+            this.infolabel.Text = "削除の際はBackSpaceキーを押してください。";
+            // 
             // ItemEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1040, 623);
+            this.Controls.Add(this.infolabel);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.comboBox1);
@@ -203,5 +217,6 @@ namespace windowsApp
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Label infolabel;
     }
 }

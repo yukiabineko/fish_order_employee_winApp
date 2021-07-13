@@ -42,7 +42,7 @@ namespace windowsApp
                 NameValueCollection collection = new NameValueCollection();
                 collection.Add("name", textBox2.Text);
                 collection.Add("price", textBox3.Text);
-                collection.Add("category", comboBox1.SelectedItem.ToString());
+                collection.Add("category", comboBox1.SelectedItem == null? "未選択" : comboBox1.SelectedItem.ToString());
                 webClient.UploadValuesAsync(new Uri(railsUrl), collection);
                 webClient.UploadValuesCompleted += async (s, o) =>
                 {
@@ -112,5 +112,20 @@ namespace windowsApp
         {
             textBox1.ReadOnly = true;
         }
+
+        private void textBox3_KeyDown(object sender, KeyEventArgs e)
+        {
+            
+        }
+
+        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar < '0' || '9' < e.KeyChar)&& e.KeyChar != '\b')
+            {
+                //押されたキーが 0～9でない場合は、イベントをキャンセルする
+                e.Handled = true;
+            }
+        }
+        
     }
 }

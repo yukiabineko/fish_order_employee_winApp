@@ -10,7 +10,9 @@ namespace windowsApp
     public partial class UserControl1 : UserControl
     {
         public Menu menu;
-        JArray array;
+        public JArray array;
+        private string mail;
+        private string pass;
 
         public UserControl1()
         {
@@ -79,8 +81,8 @@ namespace windowsApp
                 using (WebClient webClient = new WebClient())
                 {
                     NameValueCollection collection = new NameValueCollection();
-                    collection.Add("email", menu.getMail());
-                    collection.Add("password", menu.getPass());
+                    collection.Add("email", this.mail);
+                    collection.Add("password", this.pass);
                     webClient.UploadValuesAsync(new Uri(usersUrl), collection);
                     webClient.UploadValuesCompleted += (s, o) =>
                     {
@@ -108,12 +110,15 @@ namespace windowsApp
 
         private void UserControl1_Load(object sender, EventArgs e)
         {
-
+            this.mail = menu.getMail();
+            this.pass = menu.getPass();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             UserNew usernew = new UserNew();
+            usernew.main = this;
+            usernew.SetData(this.mail, this.pass);
             usernew.ShowDialog(this);
             usernew.Dispose();
         }
@@ -137,8 +142,6 @@ namespace windowsApp
                 DialogResult result = MessageBox.Show("削除しますか？","",MessageBoxButtons.YesNo);
                 if(result == DialogResult.Yes)
                 {
-                  
-                    MessageBox.Show((string)obj["id"]);
                     string deleteUrl = "https://uematsu-backend.herokuapp.com/users/" + (string)obj["id"];
                     using (WebClient webClient = new WebClient())
                     {
@@ -221,6 +224,9 @@ namespace windowsApp
                 };
               
             }
+
         }
+       
     }
+
 }

@@ -41,6 +41,7 @@ namespace windowsApp
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.infolabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -105,10 +106,14 @@ namespace windowsApp
             // 
             // textBox3
             // 
+            this.textBox3.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.textBox3.Location = new System.Drawing.Point(64, 398);
             this.textBox3.Name = "textBox3";
+            this.textBox3.ShortcutsEnabled = false;
             this.textBox3.Size = new System.Drawing.Size(651, 31);
             this.textBox3.TabIndex = 7;
+            this.textBox3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox3_KeyDown);
+            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox3_KeyPress);
             // 
             // comboBox1
             // 
@@ -140,7 +145,7 @@ namespace windowsApp
             // 
             this.button2.BackColor = System.Drawing.SystemColors.Highlight;
             this.button2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button2.Location = new System.Drawing.Point(220, 584);
+            this.button2.Location = new System.Drawing.Point(219, 558);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(308, 60);
             this.button2.TabIndex = 10;
@@ -152,11 +157,23 @@ namespace windowsApp
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // infolabel
+            // 
+            this.infolabel.AutoSize = true;
+            this.infolabel.Font = new System.Drawing.Font("Yu Gothic UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.infolabel.ForeColor = System.Drawing.Color.Red;
+            this.infolabel.Location = new System.Drawing.Point(129, 355);
+            this.infolabel.Name = "infolabel";
+            this.infolabel.Size = new System.Drawing.Size(366, 28);
+            this.infolabel.TabIndex = 11;
+            this.infolabel.Text = "削除の際はBackSpaceキーを押してください。";
+            // 
             // NewItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 673);
+            this.Controls.Add(this.infolabel);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.comboBox1);
@@ -190,5 +207,6 @@ namespace windowsApp
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Label infolabel;
     }
 }

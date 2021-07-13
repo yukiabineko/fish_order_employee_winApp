@@ -41,6 +41,7 @@ namespace windowsApp
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
+            this.infolabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -151,11 +152,23 @@ namespace windowsApp
             this.textBox3.TabIndex = 12;
             this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox3_KeyPress_1);
             // 
+            // infolabel
+            // 
+            this.infolabel.AutoSize = true;
+            this.infolabel.Font = new System.Drawing.Font("Yu Gothic UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.infolabel.ForeColor = System.Drawing.Color.Red;
+            this.infolabel.Location = new System.Drawing.Point(184, 398);
+            this.infolabel.Name = "infolabel";
+            this.infolabel.Size = new System.Drawing.Size(366, 28);
+            this.infolabel.TabIndex = 13;
+            this.infolabel.Text = "削除の際はBackSpaceキーを押してください。";
+            // 
             // UserNew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(873, 801);
+            this.Controls.Add(this.infolabel);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.textBox4);
@@ -189,5 +202,6 @@ namespace windowsApp
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label infolabel;
     }
 }
