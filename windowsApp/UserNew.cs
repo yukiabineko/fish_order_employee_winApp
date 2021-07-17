@@ -28,6 +28,7 @@ namespace windowsApp
 
         private void button1_Click(object sender, EventArgs e)
         {
+            button1.Enabled = false;
             using(WebClient webClient = new WebClient())
             {
                 NameValueCollection collection = new NameValueCollection();
@@ -35,18 +36,22 @@ namespace windowsApp
                 if(textBox1.Text == "" ||  textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "" || textBox5.Text == "")
                 {
                     MessageBox.Show("未入力な項目があります。");
+                    button1.Enabled = true;
                 }
                 else if(textBox4.Text != textBox5.Text)
                 {
                     MessageBox.Show("パスワードをご確認ください。");
+                    button1.Enabled = true;
                 }
                 else if (IsValidMailAddress(textBox2.Text) == false)
                 {
                     MessageBox.Show("メールアドレスが不正です。");
+                    button1.Enabled = true;
                 }
                 else if (System.Text.RegularExpressions.Regex.IsMatch(textBox3.Text, @"\A0\d{1,4}\d{1,4}\d{4}\z") == false)
                 {
                     MessageBox.Show("電話番号が不正です。");
+                    button1.Enabled = true;
                 }
                 else
                 {

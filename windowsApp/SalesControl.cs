@@ -117,10 +117,10 @@ namespace windowsApp
             if(sale != null)
             {
                 int num = int.Parse(sale);
-                double d = (double)num / total * 100;
+                double d = Math.Floor((double)num / total * 100);
                 Console.WriteLine(num);
                 Console.WriteLine(d);
-                return d.ToString();
+                return d.ToString() + "%";
             }
             else
             {

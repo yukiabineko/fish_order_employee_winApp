@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Net;
 using System.Collections.Specialized;
@@ -124,6 +120,11 @@ namespace windowsApp
                         //メインの一覧更新
                         using (WebClient webClient = new WebClient())
                         {
+                            main.groupBox1.Visible = true;
+                            for (var i = main.progressBar1.Minimum; i < main.progressBar1.Maximum; i += 10)
+                            {
+                                main.progressBar1.Value = i;
+                            }
                             main.todayData.Clear();
                             main.dataGridView1.Rows.Clear();
                             string url = "https://uematsu-backend.herokuapp.com/shoppings/index";
@@ -173,6 +174,7 @@ namespace windowsApp
                                         }
                                     }
                                     groupBox1.Visible = false;
+                                    main.groupBox1.Visible = false;
 
                                 };
                             }

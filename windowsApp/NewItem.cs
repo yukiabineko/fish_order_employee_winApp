@@ -22,6 +22,7 @@ namespace windowsApp
 
         private void button2_Click(object sender, EventArgs e)
         {
+            button2.Enabled = false;
             /*
             if(this.openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -94,7 +95,9 @@ namespace windowsApp
                             itemControl.groupBox1.Visible = false;
                         };
                     }
-                    catch (Exception) { }
+                    catch (Exception) {
+                        button2.Enabled = true;
+                    }
                    
                 };
             };

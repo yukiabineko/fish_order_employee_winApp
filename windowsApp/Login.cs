@@ -21,6 +21,7 @@ namespace windowsApp
             progressBar1.Minimum = 10;
             progressBar1.Maximum = 100;
             progressBar1.Value = progressBar1.Minimum;
+
            
 
         }
@@ -95,6 +96,7 @@ namespace windowsApp
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+
             UserNew usernew = new UserNew();
             usernew.ShowDialog(this);
             usernew.Dispose();

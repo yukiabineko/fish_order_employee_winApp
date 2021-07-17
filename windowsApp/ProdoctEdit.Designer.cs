@@ -36,6 +36,7 @@ namespace windowsApp
             this.label4 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
+            this.infolabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,6 +81,7 @@ namespace windowsApp
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(911, 31);
             this.textBox1.TabIndex = 3;
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // label4
             // 
@@ -117,11 +119,25 @@ namespace windowsApp
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // infolabel
+            // 
+            this.infolabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.infolabel.AutoSize = true;
+            this.infolabel.Font = new System.Drawing.Font("Yu Gothic UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.infolabel.ForeColor = System.Drawing.Color.Red;
+            this.infolabel.Location = new System.Drawing.Point(287, 161);
+            this.infolabel.Name = "infolabel";
+            this.infolabel.Size = new System.Drawing.Size(366, 28);
+            this.infolabel.TabIndex = 13;
+            this.infolabel.Text = "削除の際はBackSpaceキーを押してください。";
+            // 
             // ProdoctEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(953, 595);
+            this.Controls.Add(this.infolabel);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label4);
@@ -147,5 +163,6 @@ namespace windowsApp
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label infolabel;
     }
 }

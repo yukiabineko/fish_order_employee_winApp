@@ -26,7 +26,7 @@ namespace windowsApp
 
         private  void button1_Click(object sender, EventArgs e)
         {
-           
+            button1.Enabled = false;
             string posturl = "https://uematsu-backend.herokuapp.com/processings";
 
             using(WebClient webClient = new WebClient())
@@ -61,8 +61,11 @@ namespace windowsApp
                                 {
                                     dataGridView1.Rows.Add(arr["processing_name"]);
                                 }
+                                button1.Enabled = true;
                             }
-                            catch (Exception) { }
+                            catch (Exception) {
+                                button1.Enabled = true;
+                            }
                         }
                         else
                         {
@@ -70,7 +73,9 @@ namespace windowsApp
                         }
                     };
                 }
-                catch (Exception) { }
+                catch (Exception) {
+                    button1.Enabled = true;
+                }
             }
         }
 

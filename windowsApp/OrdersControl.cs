@@ -9,6 +9,7 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Collections.Specialized;
+using System.Diagnostics;
 
 namespace windowsApp
 {
@@ -54,6 +55,7 @@ namespace windowsApp
             status.Width = 100;
 
             DataGridViewTextBoxColumn customer = new DataGridViewTextBoxColumn();
+            customer.Name = "name";
             customer.HeaderText = "お客様名";
             customer.Width = 160;
 
@@ -89,6 +91,18 @@ namespace windowsApp
                 orderProcess.SetParameter(token, mail, pass);
                 orderProcess.ShowDialog(this);
                 orderProcess.Dispose();
+            }
+             else if(dgv.Columns[e.ColumnIndex].Name == "name")
+            {
+                string name = (string)todayData[e.RowIndex]["user_name"];
+                MessageBox.Show(name);
+
+               /* System.Diagnostics.Process p = System.Diagnostics.Process.Start(new ProcessStartInfo("outlook")
+                {
+                    UseShellExecute = true,
+                    Arguments = "mailto:" + email + "?" +
+                });
+                p.Close();*/
             }
             else if(dgv.Columns[e.ColumnIndex].Name == "num")
             {
@@ -160,6 +174,11 @@ namespace windowsApp
         //データ一覧の取得
         public void GetIndex()
         {
+            groupBox1.Visible = true;
+            for (var i = progressBar1.Minimum; i < progressBar1.Maximum; i += 10)
+            {
+                progressBar1.Value = i;
+            }
             using (WebClient webClient = new WebClient())
             {
                 string url = "https://uematsu-backend.herokuapp.com/shoppings/index";
@@ -208,7 +227,7 @@ namespace windowsApp
                                 dataGridView1.Rows[i].Cells[4].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                             }
                         }
-
+                        groupBox1.Visible = false;
                     };
                 }
                 catch (Exception)

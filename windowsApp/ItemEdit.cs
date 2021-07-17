@@ -29,6 +29,7 @@ namespace windowsApp
 
         private void button2_Click(object sender, EventArgs e)
         {
+            button2.Enabled = false;
             string railsUrl = "https://uematsu-backend.herokuapp.com/items/" + itemId;
             main.groupBox1.Visible = true;
             for (var i = main.progressBar1.Minimum; i < main.progressBar1.Maximum; i += 10)
@@ -95,7 +96,9 @@ namespace windowsApp
                             main.groupBox1.Visible = false;
                         };
                     }
-                    catch (Exception) { }
+                    catch (Exception) {
+                        button2.Enabled = true;
+                    }
 
                 };
             };

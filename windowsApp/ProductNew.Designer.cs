@@ -37,7 +37,7 @@ namespace windowsApp
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.infolabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,28 +131,25 @@ namespace windowsApp
             this.label4.Text = "店頭陳列商品登録";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button2
+            // infolabel
             // 
-            this.button2.BackColor = System.Drawing.Color.White;
-            this.button2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button2.Location = new System.Drawing.Point(723, 240);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(54, 42);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "✖";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Visible = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.infolabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.infolabel.AutoSize = true;
+            this.infolabel.Font = new System.Drawing.Font("Yu Gothic UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.infolabel.ForeColor = System.Drawing.Color.Red;
+            this.infolabel.Location = new System.Drawing.Point(63, 198);
+            this.infolabel.Name = "infolabel";
+            this.infolabel.Size = new System.Drawing.Size(366, 28);
+            this.infolabel.TabIndex = 12;
+            this.infolabel.Text = "削除の際はBackSpaceキーを押してください。";
             // 
             // ProductNew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 564);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.infolabel);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.numericUpDown1);
@@ -180,6 +177,6 @@ namespace windowsApp
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label infolabel;
     }
 }

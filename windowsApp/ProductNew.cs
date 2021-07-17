@@ -56,17 +56,22 @@ namespace windowsApp
 
         private void button1_Click(object sender, EventArgs e)
         {
+            button1.Enabled = false;
+
             if (!str.Contains(comboBox1.SelectedItem))
             {
                 MessageBox.Show("リストにない商品です。");
+                button1.Enabled = true;
             }
             else if(textBox1.Text == "")
             {
                 MessageBox.Show("金額が入力されてません。");
+                button1.Enabled = true;
             }
             else if(numericUpDown1.Value == 0)
             {
                 MessageBox.Show("在庫の設定が不正です。");
+                button1.Enabled = true;
             }
             else
             {
@@ -113,15 +118,19 @@ namespace windowsApp
 
                                            );
                                         };
+                                        button1.Enabled = true;
                                     };
                                 }
-                                catch (Exception){}
+                                catch (Exception){
+                                    button1.Enabled = true;
+                                }
                             };
-
+                            button1.Enabled = true;
                         }
                         catch (Exception)
                         {
                             MessageBox.Show("登録失敗しました。");
+                            button1.Enabled = true;
                         }
                        
                     };
@@ -131,10 +140,10 @@ namespace windowsApp
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar < '0' || '9' < e.KeyChar)
+            if ((e.KeyChar < '0' || '9' < e.KeyChar)&& e.KeyChar != '\b')
             {
                 //押されたキーが 0～9でない場合は、イベントをキャンセルする
-                button2.Visible = true;
+              
                 e.Handled = true;
             }
 
@@ -147,14 +156,7 @@ namespace windowsApp
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if(textBox1.Text == "")
-            {
-                button2.Visible = false;
-            }
-            else
-            {
-                button2.Visible = true;
-            }
+
         }
         public void setEmail(string email)
         {

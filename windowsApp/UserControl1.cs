@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Collections.Specialized;
+using System.Diagnostics;
 
 namespace windowsApp
 {
@@ -32,7 +33,7 @@ namespace windowsApp
             DataGridViewTextBoxColumn mailColumn = new DataGridViewTextBoxColumn();
             mailColumn.HeaderText = "メールアドレス";
             mailColumn.Width = 240;
-
+            mailColumn.Name = "mail";
 
             DataGridViewTextBoxColumn telColumn = new DataGridViewTextBoxColumn();
             telColumn.HeaderText = "電話番号";
@@ -163,6 +164,17 @@ namespace windowsApp
                     };
 
                 }
+            }
+            else if(dgv.Columns[e.ColumnIndex].Name == "mail")
+            {
+                string to_mail = (string)array[e.RowIndex]["email"];
+                System.Diagnostics.Process p = System.Diagnostics.Process.Start(new ProcessStartInfo("outlook")
+                {
+                    UseShellExecute = true,
+                    Arguments = "mailto:" + to_mail
+                });
+                p.Close();
+              
             }
             else
             {
