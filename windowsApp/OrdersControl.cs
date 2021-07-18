@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Net;
-using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -95,14 +90,38 @@ namespace windowsApp
              else if(dgv.Columns[e.ColumnIndex].Name == "name")
             {
                 string name = (string)todayData[e.RowIndex]["user_name"];
-                MessageBox.Show(name);
-
-               /* System.Diagnostics.Process p = System.Diagnostics.Process.Start(new ProcessStartInfo("outlook")
+                string item = (string)todayData[e.RowIndex]["name"];
+                string url =  "https://uematsu-backend.herokuapp.com/users/user_show";
+                using(WebClient web = new WebClient())
                 {
-                    UseShellExecute = true,
-                    Arguments = "mailto:" + email + "?" +
-                });
-                p.Close();*/
+                    NameValueCollection collection = new NameValueCollection();
+                    collection.Add("name", name);
+                    try
+                    {
+                        web.UploadValuesAsync(new Uri(url), "POST", collection);
+                        web.UploadValuesCompleted += (s, o) =>
+                        {
+                            string res = System.Text.Encoding.UTF8.GetString(o.Result);
+                            JToken token = JToken.Parse(res);
+                            Console.WriteLine(token["email"]);
+                            System.Diagnostics.Process p = System.Diagnostics.Process.Start(new ProcessStartInfo("outlook")
+                            {
+                                UseShellExecute = true,
+                                Arguments = "mailto:" + (string)token["email"] + "?subject=ご注文商品:" + item + "ついて"
+                            }); 
+                            p.Close();
+
+                        };
+                    }
+                    catch (Exception) { }
+                  
+
+                };
+
+
+                                      
+
+               
             }
             else if(dgv.Columns[e.ColumnIndex].Name == "num")
             {
