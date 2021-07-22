@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Newtonsoft.Json.Linq;
@@ -13,6 +9,7 @@ namespace windowsApp
     public partial class SalesChart : Form
     {
         private JArray array;
+        public SalesControl main;
 
         public SalesChart()
         {
@@ -71,5 +68,9 @@ namespace windowsApp
 
         }
 
+        private void SalesChart_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            main.button2.Enabled = true;
+        }
     }
 }

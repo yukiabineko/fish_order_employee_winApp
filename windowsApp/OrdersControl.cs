@@ -68,6 +68,8 @@ namespace windowsApp
             dataGridView1.Columns.Add(status);
             dataGridView1.Columns.Add(total);
 
+            dataGridView1.Visible = false;
+
              mail = main.getMail();
              pass = main.getPass();
              GetIndex();
@@ -211,7 +213,13 @@ namespace windowsApp
                     {
                         string resStr = System.Text.Encoding.UTF8.GetString(o.Result);
                         JArray array = JArray.Parse(resStr);
+                       
                         todayData = setToday(array);  //本日の注文
+                        if(todayData.Count > 0)
+                        {
+                            dataGridView1.Visible = true;
+                            panel1.Visible = false;
+                        }
                         Console.WriteLine(todayData);
                         foreach (var data in todayData)
                         {

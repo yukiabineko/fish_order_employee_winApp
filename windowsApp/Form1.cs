@@ -42,6 +42,8 @@ namespace windowsApp
             // 最大化・最小化の無効
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            menuStrip1.Visible = false;
+           
         }
        public void setMail(string s)
         {
@@ -58,6 +60,27 @@ namespace windowsApp
         public string getPass()
         {
             return pass;
+        }
+
+
+        private void menuStrip1_ItemClicked_1(object sender, ToolStripItemClickedEventArgs e)
+        {
+            login.Visible = true;
+            menu.Visible = false;
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            MessageBox.Show("ログアウトしました。");
+            menuStrip1.Visible = false;
+            login.Visible = true;
+            menu.Visible = false;
+            
+            label1.Text = "";
+            label2.Text = "";
+            login.textBox1.Text = "";
+            login.textBox2.Text = "";
+            
         }
     }
 }

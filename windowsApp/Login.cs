@@ -62,6 +62,7 @@ namespace windowsApp
                             main.setPass(textBox2.Text);
                             main.menu.setMail(textBox1.Text);
                             main.menu.setPass(textBox2.Text);
+                            main.menuStrip1.Visible = true;
 
                             MessageBox.Show("ログインしました。");
                         }

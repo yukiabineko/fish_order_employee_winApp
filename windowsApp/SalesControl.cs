@@ -25,7 +25,7 @@ namespace windowsApp
 
         private async void SalesControl_Load(object sender, EventArgs e)
         {
-           
+            button2.Enabled = false;
 
             groupBox1.Visible = false;
             progressBar1.Visible = false;
@@ -64,6 +64,8 @@ namespace windowsApp
             dataGridView1.Columns.Add(saleColumn);
             dataGridView1.Columns.Add(rateColumn);
 
+            dataGridView1.Visible = false;
+
             
             try
             {
@@ -72,6 +74,11 @@ namespace windowsApp
                 var stream = await request.GetResponseAsync();
                 var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
                 array = JArray.Parse(reader);
+                if(array.Count > 0)
+                {
+                    dataGridView1.Visible = true;
+                    panel1.Visible = false;
+                }
                 total = GetSalesTotal(array);
                 label1.Text = "【売り上げ金額】" + total.ToString() + "円";
                
@@ -86,6 +93,7 @@ namespace windowsApp
                     );
                 }
                 SalesChart chart = new SalesChart();
+                chart.main = this;
                 chart.SetArray(array);
                 chart.Show();
             }
@@ -126,6 +134,42 @@ namespace windowsApp
             {
                 return "";
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                StreamWriter file = new StreamWriter(@"C:\Users\yukia\Desktop\売り上げ.csv", false, Encoding.UTF8);
+                file.WriteLine("日付け", "曜日", "売り上げ数", "合計金額");
+                foreach(var arr in array)
+                {
+                    file.WriteLine(string.Format("{0},{1},{2},{3}",
+
+                        (string)arr["day"],
+                        (string)arr["week"],
+                        (string)arr["num"] ?? "",
+                        (string)arr["合計"] ?? ""
+
+                   ));
+                }
+                file.Close();
+                MessageBox.Show("出力しました。");
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("出力失敗しました。");
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SalesChart chart = new SalesChart();
+            chart.SetArray(array);
+            chart.Show();
+            button2.Enabled = false;
+
         }
     }
 }

@@ -80,7 +80,7 @@ namespace windowsApp
 
         private void ItemControl_Load(object sender, EventArgs e)
         {
-
+            dataGridView1.Visible = false;
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -96,6 +96,11 @@ namespace windowsApp
             var stream = await request.GetResponseAsync();
             var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
             array = JArray.Parse(reader);
+            if(array.Count > 0)
+            {
+                dataGridView1.Visible = true;
+                panel1.Visible = false;
+            }
             Bitmap bitmap = windowsApp.Properties.Resources.question;
             using (WebClient wc = new WebClient())
             {

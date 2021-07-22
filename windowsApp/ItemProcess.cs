@@ -97,6 +97,8 @@ namespace windowsApp
             dataGridView1.Columns.Add(processName);
             dataGridView1.Columns.Add(deleteBtn);
 
+            dataGridView1.Visible = false;
+
             string processUrl = "https://uematsu-backend.herokuapp.com/processings/" + this.id;
             try
             {
@@ -104,6 +106,11 @@ namespace windowsApp
                 var stream = await webRequest.GetResponseAsync();
                 var reader = new StreamReader(stream.GetResponseStream()).ReadToEnd();
                 array = JArray.Parse(reader);
+                if(array.Count > 0)
+                {
+                    dataGridView1.Visible = true;
+                    panel1.Visible = false;
+                }
                 Console.WriteLine(array);
                 foreach(var process in array)
                 {

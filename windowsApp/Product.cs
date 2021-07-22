@@ -76,6 +76,8 @@ namespace windowsApp
             dataGridView1.Columns[5].DefaultCellStyle.BackColor = Color.Red;
             dataGridView1.Columns[5].DefaultCellStyle.ForeColor = Color.White;
 
+            dataGridView1.Visible = false;
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -101,6 +103,11 @@ namespace windowsApp
                     {
                         string data = o.Result;
                         products = JArray.Parse(data);
+                        if(products.Count > 0)
+                        {
+                            dataGridView1.Visible = true;
+                            panel1.Visible = false;
+                        }
                         Console.WriteLine(data);
                         foreach (var arr in products)
                         {

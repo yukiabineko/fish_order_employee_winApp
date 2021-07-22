@@ -38,6 +38,7 @@ namespace windowsApp
             this.ClientSize = new System.Drawing.Size(1823, 641);
             this.Name = "SalesChart";
             this.Text = "SalesChart";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SalesChart_FormClosed);
             this.Load += new System.EventHandler(this.SalesChart_Load);
             this.ResumeLayout(false);
 

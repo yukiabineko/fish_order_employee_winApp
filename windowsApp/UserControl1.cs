@@ -89,6 +89,11 @@ namespace windowsApp
                     {
                         string data = System.Text.Encoding.UTF8.GetString(o.Result);
                         array = JArray.Parse(data);
+                        if(array.Count > 0)
+                        {
+                            dataGridView1.Visible = true;
+                            panel1.Visible = false;
+                        }
                         foreach (var obj in array)
                         {
                             dataGridView1.Rows.Add(
@@ -111,6 +116,7 @@ namespace windowsApp
 
         private void UserControl1_Load(object sender, EventArgs e)
         {
+            dataGridView1.Visible = false;
             this.mail = menu.getMail();
             this.pass = menu.getPass();
         }
