@@ -77,6 +77,7 @@ namespace windowsApp
             dataGridView1.Columns[5].DefaultCellStyle.ForeColor = Color.White;
 
             dataGridView1.Visible = false;
+            button2.Visible = false;
 
         }
 
@@ -120,6 +121,11 @@ namespace windowsApp
                            );
                         };
                         groupBox1.Visible = false;
+                        if(dataGridView1.Rows.Count > 0) { 
+                            button2.Visible = true;
+                            dataGridView1.Visible = true;
+                            panel1.Visible = false;
+                        }
                     };
                 }
                 catch (Exception) {
@@ -151,13 +157,14 @@ namespace windowsApp
             /*削除処理*/
             else {
                 DataGridView dg = (DataGridView)sender;
-                JToken jToken = items[e.RowIndex];
+                JToken jToken = products[e.RowIndex];
                 string url = "https://uematsu-backend.herokuapp.com/orders/" + (string)jToken["id"];
                 DialogResult result = MessageBox.Show("削除しますか？", "", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
                     try
                     {
+                  
                         WebRequest delrequest = WebRequest.Create(url);
                         delrequest.Method = "DELETE";
                         var stream = await delrequest.GetResponseAsync();
@@ -166,9 +173,18 @@ namespace windowsApp
                         stream.Close();
                         MessageBox.Show((string)ob["message"]);
                         dg.Rows[e.RowIndex].Visible = false;
+                        dg.Rows.RemoveAt(e.RowIndex);
                         foreach (DataGridViewRow r in dgv.SelectedRows)
                         {
-                            dataGridView1.Rows.Remove(r);
+                            dg.Rows.Remove(r);
+                            
+                        }
+                       
+                        if (dg.Rows.Count == 0)
+                        {
+                            button2.Visible = false;
+                            dataGridView1.Visible = false;
+                            panel1.Visible = true;
                         }
                     }
                     catch (Exception)
@@ -257,7 +273,9 @@ namespace windowsApp
                     stream.Close();
                     MessageBox.Show((string)ob["message"]);
                     dataGridView1.Rows.Clear();
-                    
+                    button2.Visible = false;
+                    dataGridView1.Visible = false;
+                    panel1.Visible = true;
                 }
                 catch (Exception)
                 {

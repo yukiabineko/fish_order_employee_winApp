@@ -62,6 +62,8 @@ namespace windowsApp
                                     dataGridView1.Rows.Add(arr["processing_name"]);
                                 }
                                 button1.Enabled = true;
+                                dataGridView1.Visible = true;
+                                panel1.Visible = false;
                             }
                             catch (Exception) {
                                 button1.Enabled = true;

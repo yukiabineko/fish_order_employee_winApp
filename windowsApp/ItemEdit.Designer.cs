@@ -116,6 +116,7 @@ namespace windowsApp
             // 
             // textBox3
             // 
+            this.textBox3.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.textBox3.Location = new System.Drawing.Point(537, 352);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(466, 31);

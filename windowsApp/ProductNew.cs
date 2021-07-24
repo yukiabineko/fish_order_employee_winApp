@@ -97,6 +97,11 @@ namespace windowsApp
                             }
                             
                             main.dataGridView1.Rows.Clear();
+                            main.groupBox1.Visible = true;
+                            for (var i = main.progressBar1.Minimum; i < main.progressBar1.Maximum; i++)
+                            {
+                                main.progressBar1.Value = i;
+                            }
                             string url = "https://uematsu-backend.herokuapp.com/orders";
                             using (WebClient webClient = new WebClient())
                             {
@@ -106,6 +111,7 @@ namespace windowsApp
                                     webClient.DownloadStringCompleted += (s, o) =>
                                     {
                                         string data = o.Result;
+                                       
                                         main.products = JArray.Parse(data);
                                         Console.WriteLine(data);
                                         foreach (var arr in main.products)
@@ -118,8 +124,19 @@ namespace windowsApp
 
                                            );
                                         };
+                                        main.groupBox1.Visible = false;
+
                                         button1.Enabled = true;
+                                        if(main.dataGridView1.Rows.Count > 0)
+                                        {
+                                   
+                                            main.panel1.Visible = false;
+                                            main.dataGridView1.Visible = true;
+                                            main.button2.Visible = true;
+                                        }
+                                       
                                     };
+                                   
                                 }
                                 catch (Exception){
                                     button1.Enabled = true;
@@ -134,6 +151,7 @@ namespace windowsApp
                         }
                        
                     };
+                   
                 };
             }
         }

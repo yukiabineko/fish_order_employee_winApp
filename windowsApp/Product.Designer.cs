@@ -182,12 +182,12 @@ namespace windowsApp
         public System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        public System.Windows.Forms.Button button2;
         public System.Windows.Forms.GroupBox groupBox1;
         public System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Panel panel1;
+        public System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label3;
     }
 }
