@@ -98,6 +98,7 @@ namespace windowsApp
 
             dataGridView1.Columns.Add(processName);
             dataGridView1.Columns.Add(deleteBtn);
+            dataGridView1.ReadOnly = true;
 
             dataGridView1.Visible = false;
 

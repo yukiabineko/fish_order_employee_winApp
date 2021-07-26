@@ -42,7 +42,7 @@ namespace windowsApp
             foreach(var arr in array)
             {
                 DateTime tim = SetDay((string)arr["day"]);
-                DateTime time = tim.AddDays(0);
+                DateTime time = tim.AddDays(1);
                 int sales = arr["合計"] == null? 0 : int.Parse((string)arr["合計"]);
                 series.Points.AddXY(time, sales);
             }

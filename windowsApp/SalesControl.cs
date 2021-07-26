@@ -65,6 +65,7 @@ namespace windowsApp
             dataGridView1.Columns.Add(rateColumn);
 
             dataGridView1.Visible = false;
+            dataGridView1.ReadOnly = true;
 
             
             try
@@ -166,6 +167,7 @@ namespace windowsApp
         private void button2_Click(object sender, EventArgs e)
         {
             SalesChart chart = new SalesChart();
+            chart.main = this;
             chart.SetArray(array);
             chart.Show();
             button2.Enabled = false;

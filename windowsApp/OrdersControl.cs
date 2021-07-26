@@ -69,6 +69,7 @@ namespace windowsApp
             dataGridView1.Columns.Add(total);
 
             dataGridView1.Visible = false;
+            dataGridView1.ReadOnly = true;
 
              mail = main.getMail();
              pass = main.getPass();

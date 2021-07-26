@@ -55,6 +55,7 @@ namespace windowsApp
             dataGridView1.Columns.Add(priceColumn);
             dataGridView1.Columns.Add(numColumn);
             dataGridView1.Columns.Add(processColumn);
+            dataGridView1.ReadOnly = true;
 
             //当日、翌日用
             dataGridView2.AllowUserToAddRows = false;
@@ -90,6 +91,7 @@ namespace windowsApp
             dataGridView2.Columns.Add(numColumn2);
             dataGridView2.Columns.Add(processColumn2);
             dataGridView2.Columns.Add(confirm);
+            dataGridView2.ReadOnly = true;
 
            
         }

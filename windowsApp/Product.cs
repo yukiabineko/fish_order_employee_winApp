@@ -70,6 +70,7 @@ namespace windowsApp
             dataGridView1.Columns.Add(total);
             dataGridView1.Columns.Add(edit);
             dataGridView1.Columns.Add(delete);
+            dataGridView1.ReadOnly = true;
 
             dataGridView1.Columns[4].DefaultCellStyle.BackColor = Color.Blue;
             dataGridView1.Columns[4].DefaultCellStyle.ForeColor = Color.White;
@@ -77,6 +78,7 @@ namespace windowsApp
             dataGridView1.Columns[5].DefaultCellStyle.ForeColor = Color.White;
 
             dataGridView1.Visible = false;
+            dataGridView1.ReadOnly = true;
             button2.Visible = false;
 
         }
@@ -155,7 +157,7 @@ namespace windowsApp
                 prodoctEdit.ShowDialog(this);
             }
             /*削除処理*/
-            else {
+            else if(dgv.Columns[e.ColumnIndex].Name == "delete"){
                 DataGridView dg = (DataGridView)sender;
                 JToken jToken = products[e.RowIndex];
                 string url = "https://uematsu-backend.herokuapp.com/orders/" + (string)jToken["id"];
@@ -200,6 +202,7 @@ namespace windowsApp
         {
             this.setEmail(main.getMail());
             this.setPass(main.getPass());
+            dataGridView1.ReadOnly = true;
 
             try
             {

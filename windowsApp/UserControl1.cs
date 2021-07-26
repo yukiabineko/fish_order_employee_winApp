@@ -54,6 +54,7 @@ namespace windowsApp
             dataGridView1.Columns.Add(mailColumn);
             dataGridView1.Columns.Add(telColumn);
             dataGridView1.Columns.Add(deleteBtn);
+            dataGridView1.ReadOnly = true;
 
         }
 
@@ -164,6 +165,11 @@ namespace windowsApp
                             {
                                 dgv.Rows.Remove(r);
                             }
+                            if (dgv.Rows.Count == 0)
+                            {
+                                dataGridView1.Visible = false;
+                                panel1.Visible = true;
+                            }
                             MessageBox.Show("削除しました。");
 
                         };
@@ -205,38 +211,47 @@ namespace windowsApp
                     webClient.UploadValuesAsync(new Uri(orderUrl), collection);
                     webClient.UploadValuesCompleted += (s, o) =>
                     {
-                        string data = System.Text.Encoding.UTF8.GetString(o.Result);
-                        JObject obj = JObject.Parse(data);
-
-                       JArray arrs = (JArray)obj["orders"];
-                       JArray todayArray = new JArray();
-                       JArray historyArray = new JArray();
-
-   
-                        foreach(var ar in arrs[0])
+                        try
                         {
-                            if((string)ar["shopping_date"] == dt || (string)ar["shopping_date"] == tw)
-                            {
-                                todayArray.Add(ar);
-                            }
-                            else
-                            {
-                                historyArray.Add(ar);
-                            }
-                        }
+                            string data = System.Text.Encoding.UTF8.GetString(o.Result);
+                            JObject obj = JObject.Parse(data);
 
-                        UserOrder orderWin = new UserOrder();
-                        orderWin.setJArray(arrs);
-                        orderWin.setTodayArray(todayArray);
-                        orderWin.setHistoryArray(historyArray);
-                        orderWin.setMail(menu.getMail());
-                        orderWin.setPass(menu.getPass());
-                        orderWin.setId((string)obj["id"]);
-                        orderWin.ShowDialog(this);
-                        orderWin.Dispose();
-                        progressBar1.Visible = false;
-                       
-                        groupBox1.Visible = false;
+                            JArray arrs = (JArray)obj["orders"];
+                            JArray todayArray = new JArray();
+                            JArray historyArray = new JArray();
+
+
+                            foreach (var ar in arrs[0])
+                            {
+                                if ((string)ar["shopping_date"] == dt || (string)ar["shopping_date"] == tw)
+                                {
+                                    todayArray.Add(ar);
+                                }
+                                else
+                                {
+                                    historyArray.Add(ar);
+                                }
+                            }
+
+                            UserOrder orderWin = new UserOrder();
+                            orderWin.setJArray(arrs);
+                            orderWin.setTodayArray(todayArray);
+                            orderWin.setHistoryArray(historyArray);
+                            orderWin.setMail(menu.getMail());
+                            orderWin.setPass(menu.getPass());
+                            orderWin.setId((string)obj["id"]);
+                            orderWin.ShowDialog(this);
+                            orderWin.Dispose();
+                            progressBar1.Visible = false;
+
+                            groupBox1.Visible = false;
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("データを取得できません。");
+                            groupBox1.Visible = false;
+                        }
+                        
 
                     };
                 };

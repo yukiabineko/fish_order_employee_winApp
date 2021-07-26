@@ -75,6 +75,7 @@ namespace windowsApp
             dataGridView1.Columns.Add(processCell);
             dataGridView1.Columns.Add(editCell);
             dataGridView1.Columns.Add(deleteCell);
+            dataGridView1.ReadOnly = true;
 
         }
 
@@ -203,9 +204,15 @@ namespace windowsApp
                         stream.Close();
                         MessageBox.Show((string)ob["message"]);
                         dg.Rows[e.RowIndex].Visible = false;
+                        dg.Rows.RemoveAt(e.RowIndex);
                         foreach (DataGridViewRow r in dgv.SelectedRows)
                         {
                             dataGridView1.Rows.Remove(r);
+                        }
+                        if (dg.Rows.Count == 0)
+                        {
+                            dataGridView1.Visible = false;
+                            panel1.Visible = true;
                         }
                     }
                     catch (Exception)
@@ -221,10 +228,7 @@ namespace windowsApp
                 process.ShowDialog(this);
                 process.Dispose();
             }
-            else
-            {
-                MessageBox.Show("normal");
-            }
+            
         }
     }
 }
